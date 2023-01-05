@@ -1,0 +1,257 @@
+<head>
+	<title>Intelligent Grouping</title>
+	<meta name="google-signin-client_id" content="245771948528-c31us1t1k3l0tpmlcm2kq8jd33jmd6rj.apps.googleusercontent.com">
+  <link rel="icon" type="image/svg+xml" href="/images/blue-bg.svg">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css">
+	<link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+
+<body>
+	<div id="loading-bar-container">
+		<div id="loading-bar"></div>
+	</div>
+
+
+	<img id="spinner" src="/images/spinner.svg">
+
+  <div id = "login-container">
+    <img id="logo" src = "/images/blue-bg.svg">
+      <h1 id="title">Intelligent Grouping</h1>
+    <div id="login-btn"></div>
+  </div>
+
+  <div id="app">
+    <div id="profile-detail">
+      <h1 id = "username"></h1>
+      <button id="signout" class ="button dark">Sign Out</button>
+    </div>  
+  
+    <div id="sidebar">      
+      <div id="class-list"></div>
+      <button id="add-class" class="button">+ Add Class </button>
+      <input id="upload-class-input" type="file" accept=".csv" hidden/>
+    </div>
+
+    <div id="header">
+      <h1 id="status-title" class="medium">Dashboard</h1>
+
+      <div id="tutorial">
+        <i id="open-tutorial" class="fa fa-question-circle"></i>
+      </div>
+    </div>
+    
+    <div id="dashboard">
+      <img id="app-spinner" src="/images/spinner.svg">
+      <div id="welcome-sec" class="section visible">
+        <h1 id="welcome">Welcome!</h1>
+      </div>
+      
+      <div id="tutorial-sec" class = "section">
+        <div id="tutorial-panel" class = "panel">
+          <div class="accordion-container">
+            <div class="accordion">
+              <div class="accordion-item">
+                <div class="accordion-link">
+                  Adding classes
+                  <i class="fas fa-angle-right"></i>
+                </div>
+                <div class="answer">
+                  <ul>
+                    <li>Click the &quot;Add Class&quot; button in the left pannel.</li>
+                    <li>For manual entry, click the manual entry button in the popup and input your students one by one. Afterward, click &quot;save&quot; to save the completed manual class.</li>
+                    <li>For automatic fill in with a .CSV file, click &quot;Import Class Roster&quot; on the popup. This works with CSV files exported form infinite campus.<br /></li>
+                    <li>To edit classes, select a class from the sidebar and then click the pencil icon, and the manual entry form will pop up, allowing you to change values.</li>
+                    <li>To delete classes, select a class from the sidebar and then click the trash can icon.</li>
+                  </ul>
+                </div>
+              </div>
+    
+              <div class="accordion-item">
+                <div class="accordion-link">
+                  Making basic random groups
+                  <i class="fas fa-angle-right"></i>
+                </div>
+                <div class="answer">
+                  <ul>
+                    <li>Select the desired class in the sidebar.</li>
+                    <li>Click &quot;Create grouping&quot;
+                      <ul>
+                      <li>In case somebody is absent or otherwise not supposed to be put into a group, like for example if they are a teacher's assistant, click their name on the right sidebar, and then click the red outlined section of that sidebar. This will place them within the exclusion category and exclude them from groupings. Doing the reverse will reverse this exclusion.</li>
+                      </ul></li>
+                    <li>Click the large plus button in the main canvas to add a grouping.</li>
+                    <li>Click the &quot;Arrange Students&quot; button.</li>
+                    <li>Select &quot;Random Grouping&quot;.</li>
+                    <li>Input the desired parameters (amount of groups made or people per group).</li>
+                    <li>Click "Submit"</li>
+                    </ul>
+                </div>
+              </div>
+    
+              <div class="accordion-item">
+                <div class="accordion-link">
+                  Setting up preferences and sending out forms
+                  <i class="fas fa-angle-right"></i>
+                </div>
+                <div class="answer">
+                  <ul>
+                    <li>Click on the desired class in the left sidebar.</li>
+                    <li>On the right panel, click "Add Question."</li>
+                    <ul>
+                        <li>Each question will be added to the automatically generated forms that you can send to your students.</li>
+                    </ul>
+                    <li>Select a choice of grouping type.</li>
+                    <ul>
+                        <li>Preferred Students</li>
+                        <li>Unpreferred Students</li>
+                        <li>Preferred Topic</li>
+                        <li>Unpreferred Topic</li>
+                    </ul>
+                    <li>Input a category for the context for which these preferences are being asked for (ex: group presentation).</li>
+                    <ul>
+                      <li>For topic preferences, type in the choices separated by a new line.</li>
+                    </ul>
+                    <li>After entering all necessary information, click "add choice".</li>
+                    <li>If necessary, press the x button to remove a choice.</li>
+                    <li>Copy the form link to send to your students.</li>
+                  </ul>
+                </div>
+              </div>
+    
+              <div class="accordion-item">
+                <div class="accordion-link">
+                  Filling out forms as a student
+                  <i class="fas fa-angle-right"></i>
+                </div>
+                <div class="answer">
+                  <ul>
+                    <li>Enter your student ID.</li>
+                    <li>Rank the choices using the dropdown menus.</li>
+                    <li>Submit the form.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-class-sec" class = "section">
+        
+        <div id="information-panel" class = "panel">
+          <h1 id="info-panel-class" class="medium"></h1>
+          <p id="info-panel-num-students"></p>
+          <p id="info-panel-num-groups"></p>
+          <div id="class-actions">
+            <button id="edit-class" class="button"><i class="fa fa-pencil-alt"></i></button>
+            <button id="delete-class" class="button"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+
+        <div id="groups-panel" class = "panel">
+
+          <div id="create-group-container">
+            <button id="create-group" class="button">Create Grouping</button>
+          </div>
+
+          <div id="groupings-list">
+            
+          </div>
+          
+        </div>
+        
+        <div id="preferences-panel" class = "panel">
+          <h1 id="preferences-title" class="medium">Student Survey Questions</h1>
+          <div id="preferences-list"></div>
+          <button id="add-preference" class="button">Add Question</button>
+          <button id="copy-form-link" class="button">Copy Form Link</button>
+          <button id="view-responses" class="button">View Responses</button>
+        </div>
+        
+        
+      </div>
+
+      <div id="edit-group-sec" class="section">
+        <div id="group-scatter">
+          <div id="add-group" class="group-container persist"><i class="fa fa-plus fa-10x"></i></div>
+        </div>
+
+        <div id="group-sidebar">
+          <div id="group-actions-div">
+            <label>
+              <input id="group-name-input" class="input" required>
+              <span>Grouping Name</span>
+            </label>
+            <button id="arrange-students" class="button">Arrange Students</button>
+            <button id="save-group" class="button">Save</button>
+          </div>
+          <div id="ungrouped-students-list"></div>
+          <div id="excluded-students-list"></div>
+        </div>
+      </div>
+
+      <div id="edit-class-sec" class="section">
+        <h1 id="class-info-title" class="large">Class Info</h1>
+        <div id="class-info-inputs">
+          <label>
+            <input id="class-name-input" class="input" required>
+            <span>Class Name</span>
+          </label>
+          <label>
+            <input id="period-input" class="input" required>
+            <span>Period</span>
+          </label>
+        </div>
+        <h1 id="student-info-title" class="large">Student Info</h1>
+        <div id="student-info-inputs">
+          <div class="student-info-container sizeholder persist"><label class="label"><input class="input first-name-input"></label><label class="label"><input class="input last-name-input"></label><label class="label"><input class="input middle-initial-input"></label><label class="label"><input class="input student-id-input"></label><label class="label"><input class="input email-input"></label><i class="fas fa-times-circle fa-2x remove-student"></i></div>
+        </div>
+        <button id="add-student" class="button">+ Add Student</button>
+        <div id="edit-actions">
+          <button id="save-class" class="button">Save</button>
+          <button id="cancel-class" class="button">Cancel</button>
+        </div>
+      </div>
+      <div id="seating-chart-sec" class="section">
+        <div id="chart-grid" class="grid"></div>
+        <div id="chart-button" class="no-size">
+          <div id="angle">
+            <i class="fas fa-angle-left"></i>
+          </div>
+        </div>
+       <div id="chart-sidebar">
+          <div class="buttons">
+              <i class="fas fa-trash" id='reset-chart'></i>
+            <i class="fas fa-save" id='save-chart'></i>
+          </div>
+        </div>
+      </div>
+      <div id="responses-sec" class="section">
+        <select id="student-selector" class="selector" size=18>
+        </select>
+        <div class="panel" id="response-panel">
+          <ul id="given-responses">
+            <h1>Click the name of a student on the list to see their response.</h1>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://apis.google.com/js/platform.js"></script>
+  <script src="/md5.js"></script>
+  <script src="/gene.js"></script>
+  <script src="/ui.js"></script>
+  <script src="/elements.js"></script>
+  <script src="/auth.js"></script>
+  <script src="/classes.js"></script>
+  <script src="/groupings.js"></script>
+  <script src="/preferences.js"></script>
+  <script src="/tutorial.js"></script>
+  <script src="/script.js"></script>
+  <script src="/genetesting.js"></script>
+  <script src="/chart.js"></script>
+  <script src="/responses.js"></script>
+  <script> </script>
+</body>
