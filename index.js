@@ -209,7 +209,7 @@ app.post("/editClass", async (req, res) => {
       const studentPreferences = []
       for (const student of existingClassObj.students) {
         studentPreferences.push(student.preferences)
-        console.log(student)
+        //console.log(student)
       }
       existingClassObj.id = classObj.id
       existingClassObj.name = classObj.name
@@ -219,7 +219,7 @@ app.post("/editClass", async (req, res) => {
       for (let i = 0; i < existingClassObj.students.length; i++) {
         existingClassObj.students[i].preferences = studentPreferences[i]
       }
-      consolee.log(existingClassObj);
+      console.log("class\n" + existingClassObj);
       await user.save()
       res.json({status: true, updatedClass: existingClassObj})
     } else {
