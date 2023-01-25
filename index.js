@@ -75,7 +75,12 @@ const sendFileOptions = {
     dotfiles: 'deny'
 }
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  console.log(`Received a ${req.method} request for ${req.url}`);
+  next();
+});
 
 //Routing
 app.get('/', async (req, res) => {
@@ -200,10 +205,21 @@ app.post("/editClass", async (req, res) => {
     const user = await User.findOne({id: verification.user.sub, classes: {$elemMatch: {id: req.body.oldId}}}).exec()
     if (user) {
       const existingClassObj = user.classes.find(c => c.id == req.body.oldId)
+      //saves student preferences in an array
+      const studentPreferences = []
+      for (const student of existingClassObj.students) {
+        studentPreferences.push(student.preferences)
+        console.log(student)
+      }
       existingClassObj.id = classObj.id
       existingClassObj.name = classObj.name
       existingClassObj.period = classObj.period
       existingClassObj.students = classObj.students
+      //replaces student preferences with the array
+      for (let i = 0; i < existingClassObj.students.length; i++) {
+        existingClassObj.students[i].preferences = studentPreferences[i]
+      }
+      consolee.log(existingClassObj);
       await user.save()
       res.json({status: true, updatedClass: existingClassObj})
     } else {
