@@ -257,9 +257,9 @@ function editClass(classObj) {
     periodInput.classList.remove("invalid")
     clearDiv(studentInfoInputs)
     const preferences = []
-    for (const student of classObj.obj.students) {
-      addStudentInputs(student)
-    }
+    // for (const student of classObj.obj.students) {
+    //   addStudentInputs(student)
+    // }
     for (let i = 0; i < classObj.obj.students.length; i++) {
       preferences.push(ClassObj.obj.students[i].preferences)
       addStudentInputs(classObj.obj.students[i], i)
