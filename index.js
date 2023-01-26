@@ -206,20 +206,20 @@ app.post("/editClass", async (req, res) => {
     if (user) {
       const existingClassObj = user.classes.find(c => c.id == req.body.oldId)
       //saves student preferences in an array
-      const studentPreferences = []
-      for (const student of existingClassObj.students) {
-        studentPreferences.push(student.preferences)
-        //console.log(student)
-      }
+      // const studentPreferences = []
+      // for (const student of existingClassObj.students) {
+      //   studentPreferences.push(student.preferences)
+      //   //console.log(student)
+      // }
       existingClassObj.id = classObj.id
       existingClassObj.name = classObj.name
       existingClassObj.period = classObj.period
       existingClassObj.students = classObj.students
       //replaces student preferences with the array
-      for (let i = 0; i < existingClassObj.students.length; i++) {
-        existingClassObj.students[i].preferences = studentPreferences[i]
-      }
-      console.log("class\n" + existingClassObj);
+      // for (let i = 0; i < existingClassObj.students.length; i++) {
+      //   existingClassObj.students[i].preferences = studentPreferences[i]
+      // }
+      //console.log("class\n" + existingClassObj);
       await user.save()
       res.json({status: true, updatedClass: existingClassObj})
     } else {

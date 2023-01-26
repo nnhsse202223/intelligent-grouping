@@ -256,8 +256,13 @@ function editClass(classObj) {
     classNameInput.classList.remove("invalid")
     periodInput.classList.remove("invalid")
     clearDiv(studentInfoInputs)
+    const preferences = []
     for (const student of classObj.obj.students) {
       addStudentInputs(student)
+    }
+    for (let i = 0; i < classObj.obj.students.length; i++) {
+      preferences.push(ClassObj.obj.students[i].preferences)
+      addStudentInputs(classObj.obj.students[i], i)
     }
     setState(3, {id: classObj.obj.id})
   } else {
@@ -275,7 +280,7 @@ function editClass(classObj) {
 
 
 
-function addStudentInputs(student) {
+function addStudentInputs(student, index) {
   const studentInfoContainer = document.createElement("div")
   studentInfoContainer.classList = "student-info-container"
   studentInfoContainer.appendChild(createPlaceholderInput("First Name *", "first-name-input", student ? student.first : ""))
@@ -287,9 +292,12 @@ function addStudentInputs(student) {
   removeStudent.classList = "fas fa-times-circle fa-2x remove-student"
   removeStudent.addEventListener("click", () => {
     removeList(studentInfoContainer)
+    preferences.splice(index, 1)
   })
   studentInfoContainer.appendChild(removeStudent)
-  addList(studentInfoContainer, studentInfoInputs)
+  if(index) {
+    addList(studentInfoContainer, studentInfoInputs)
+  }
 }
 
 function validateClassInputs() {
