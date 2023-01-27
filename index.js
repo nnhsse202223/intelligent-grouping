@@ -205,31 +205,25 @@ app.post("/editClass", async (req, res) => {
     const user = await User.findOne({id: verification.user.sub, classes: {$elemMatch: {id: req.body.oldId}}}).exec()
     if (user) {
       const existingClassObj = user.classes.find(c => c.id == req.body.oldId)
-      //saves student preferences in an array
+      //saves student preferences and ids in an array
       const studentPreferences = []
       for (const student of existingClassObj.students) {
         studentPreferences.push({id: student.id, preferences: student.preferences})
-        //for loop to check if student with same id is in classObj.students
-        // for (const student2 of classObj.students) {
-        //   if(student2.id==student.id){
-        //     studentPreferences.push(student.preferences)
-        //   }
-        // }
       }
 
-      existingClassObj.id = classObj.id
-      existingClassObj.name = classObj.name
-      existingClassObj.period = classObj.period
-      existingClassObj.students = classObj.students
-      //if a student shares an id with a saved preference, add the saved preference to them
-      for(const student of existingClassObj.students){
+      //transfers student preferences to new class
+      for(const student of classObj.students){
         for(const preference of studentPreferences){
           if(student.id==preference.id){
             student.preferences = preference.preferences
           }
         }
       }
-      //console.log("class\n" + existingClassObj);
+
+      existingClassObj.id = classObj.id
+      existingClassObj.name = classObj.name
+      existingClassObj.period = classObj.period
+      existingClassObj.students = classObj.students
       await user.save()
       res.json({status: true, updatedClass: existingClassObj})
     } else {
