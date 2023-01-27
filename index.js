@@ -208,31 +208,26 @@ app.post("/editClass", async (req, res) => {
       //saves student preferences in an array
       const studentPreferences = []
       for (const student of existingClassObj.students) {
+        studentPreferences.push({id: student.id, preferences: student.preferences})
         //for loop to check if student with same id is in classObj.students
-        for (const student2 of classObj.students) {
-          if(student2.id==student.id){
-            studentPreferences.push(student.preferences)
-          }
-        }
+        // for (const student2 of classObj.students) {
+        //   if(student2.id==student.id){
+        //     studentPreferences.push(student.preferences)
+        //   }
+        // }
       }
-      //same as above loop but with regular for loops
-      for (let i = 0; i < existingClassObj.students.length; i++) {
-        for (let j = 0; j < classObj.students.length; j++) {
-          if (classObj.students[j].id == existingClassObj.students[i].id) {
-            studentPreferences.push(existingClassObj.students[i].preferences)
-          } else if (j<=existingClassObj.students.length) {
-            studentPreferences.push([])
-          }
-        }
-      }
-      
+
       existingClassObj.id = classObj.id
       existingClassObj.name = classObj.name
       existingClassObj.period = classObj.period
       existingClassObj.students = classObj.students
-      //replaces student preferences with the array
-      for (let i = 0; i < existingClassObj.students.length; i++) {
-        existingClassObj.students[i].preferences = studentPreferences[i]
+      //if a student shares an id with a saved preference, add the saved preference to them
+      for(const student of existingClassObj.students){
+        for(const preference of studentPreferences){
+          if(student.id==preference.id){
+            student.preferences = preference.preferences
+          }
+        }
       }
       //console.log("class\n" + existingClassObj);
       await user.save()
