@@ -256,14 +256,14 @@ function editClass(classObj) {
     classNameInput.classList.remove("invalid")
     periodInput.classList.remove("invalid")
     clearDiv(studentInfoInputs)
-    const preferences = []
-    // for (const student of classObj.obj.students) {
-    //   addStudentInputs(student)
-    // }
-    for (let i = 0; i < classObj.obj.students.length; i++) {
-      preferences.push(ClassObj.obj.students[i].preferences)
-      addStudentInputs(classObj.obj.students[i], i)
+    //const preferences = []
+    for (const student of classObj.obj.students) {
+      addStudentInputs(student)
     }
+    // for (let i = 0; i < classObj.obj.students.length; i++) {
+    //   preferences.push(ClassObj.obj.students[i].preferences)
+    //   addStudentInputs(classObj.obj.students[i], i)
+    // }
     setState(3, {id: classObj.obj.id})
   } else {
     statusTitle.innerText = "Create Class"
@@ -280,7 +280,7 @@ function editClass(classObj) {
 
 
 
-function addStudentInputs(student, index) {
+function addStudentInputs(student) {
   const studentInfoContainer = document.createElement("div")
   studentInfoContainer.classList = "student-info-container"
   studentInfoContainer.appendChild(createPlaceholderInput("First Name *", "first-name-input", student ? student.first : ""))
@@ -292,12 +292,11 @@ function addStudentInputs(student, index) {
   removeStudent.classList = "fas fa-times-circle fa-2x remove-student"
   removeStudent.addEventListener("click", () => {
     removeList(studentInfoContainer)
-    preferences.splice(index, 1)
+    // preferences.splice(index, 1)
   })
   studentInfoContainer.appendChild(removeStudent)
-  if(index) {
-    addList(studentInfoContainer, studentInfoInputs)
-  }
+  addList(studentInfoContainer, studentInfoInputs)
+  
 }
 
 function validateClassInputs() {
