@@ -123,6 +123,7 @@ app.get("/formData", async (req, res) => {
   if (user) {
     const classObj = user.classes.find(c => c.id == req.query.class)
     if (classObj) {
+      console.log("\nPreferences", classObj.preferences);
       res.json({status: true, preferences: classObj.preferences, className: classObj.name, period: classObj.period, students: classObj.students.map(s => (
         {name: `${s.first} ${s.middle ? `${s.middle}. ` : ""}${s.last}`, id: md5(s.id)}
       ))})
@@ -142,6 +143,7 @@ app.post("/saveStudentPreferences", async (req, res) => {
     if (student) {
       for (const preference of req.body.preferences) {
         if (["studentLike", "studentDislike"].includes(preference.type)) {
+          //explanation of next line: for each id in the preference, find the student with that id and replace it with the md5 hash of the student's id
           preference.inputs = preference.inputs.map(id => classObj.students.find(s => id == md5(s.id)).id)
         }
         student.preferences[preference.type] = preference
@@ -208,17 +210,39 @@ app.post("/editClass", async (req, res) => {
       //saves student preferences and ids in an array
       const studentPreferences = []
       for (const student of existingClassObj.students) {
+        console.log("NAME\n" + student.first+"\n")
+        console.log("PREFERENCES\n" + student.preferences+"\n")
+        console.log("INPUTS\n" + student.preferences.studentLike[0].inputs+"\n")
         studentPreferences.push({id: student.id, preferences: student.preferences})
       }
+
+      for(let i=0; i<studentPreferences.length; i++){
+         let preferences = studentPreferences[i].preferences
+         if(preferences.studentLike.length>0) {
+          let valid=false;
+          for(const student of classObj.students){
+            for (const studentLike of preferences.studentLike){
+              if(md5(student.id)==studentLike.id){
+                valid=true;
+              }
+            }
+          }
+          if(valid==false){
+            studentPreferences.splice(i,1) 
+          }
+
+
 
       //transfers student preferences to new class
       for(const student of classObj.students){
         for(const preference of studentPreferences){
           if(student.id==preference.id){
             student.preferences = preference.preferences
+            console.log("Student Preferences\n"+ student.preferences)
           }
         }
       }
+
 
       existingClassObj.id = classObj.id
       existingClassObj.name = classObj.name

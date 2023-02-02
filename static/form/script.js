@@ -11,7 +11,6 @@ startLoad()
 
 const form = window.location.pathname.split("/").slice(2, 4)
 fetch(`/formData?user=${form[0]}&class=${form[1]}`).then(res => res.json()).then(async (data) => {
-  console.log(data)
   if (data.status) {
     document.title = data.className
     classTitle.innerText = `${data.className}`
