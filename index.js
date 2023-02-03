@@ -212,12 +212,13 @@ app.post("/editClass", async (req, res) => {
       for (const student of existingClassObj.students) {
         console.log("NAME\n" + student.first+"\n")
         console.log("PREFERENCES\n" + student.preferences+"\n")
-        console.log("INPUTS\n" + student.preferences.studentLike[0].inputs+"\n")
+        console.log("INPUTS\n" + student.preferences.studentLike[0].inputs[0]+"\n")
         studentPreferences.push({id: student.id, preferences: student.preferences})
       }
 
       for(let i=0; i<studentPreferences.length; i++){
          let preferences = studentPreferences[i].preferences
+         let student = studentPreferences[i].id;
          if(preferences.studentLike.length>0) {
           let valid=false;
           for(const student of classObj.students){
@@ -230,6 +231,8 @@ app.post("/editClass", async (req, res) => {
           if(valid==false){
             studentPreferences.splice(i,1) 
           }
+          }
+      }
 
 
 
