@@ -552,6 +552,7 @@ h1.large {
 
 h1.medium {
   font-size: 2em;
+  padding: 10px 0px 0px 18px;
 }
 
 h1 {
@@ -560,6 +561,7 @@ h1 {
 
 #status-title {
   margin: 0;
+  padding: 4px 0px 0px 18px;
   color:white;
 }
 
@@ -836,7 +838,7 @@ h1 {
 }
 
 .student-name-container {
-  font-size: 1.3em;
+  font-size: 1.8em;
   background-color: var(--light-bg-alt);
   border-radius: 8px;
   margin-bottom: 10px;
@@ -850,13 +852,13 @@ h1 {
   width: 400px;
   background-color: var(--light-bg-alt);
   border-radius: 16px;
-  padding: 40px;
+  padding: 10px;
   margin: 20px;
   position: relative;
 }
 
 .group-container > h1 {
-  margin: 0 0 30px 0;
+  margin: 0 0 10px 0;
 }
 
 .group-student-list > .student-name-container {
