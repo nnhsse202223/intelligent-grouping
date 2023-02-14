@@ -210,30 +210,66 @@ app.post("/editClass", async (req, res) => {
       //saves student preferences and ids in an array
       const studentPreferences = []
       for (const student of existingClassObj.students) {
-        console.log("NAME\n" + student.first+"\n")
-        console.log("PREFERENCES\n" + student.preferences+"\n")
-        console.log("INPUTS\n" + student.preferences.studentLike[0].inputs[0]+"\n")
         studentPreferences.push({id: student.id, preferences: student.preferences})
       }
 
+      // checks if student preferences are valid (aka exist)
       for(let i=0; i<studentPreferences.length; i++){
+         // gets the specific preferences object from the studentPreferences array
          let preferences = studentPreferences[i].preferences
-         let student = studentPreferences[i].id;
-         if(preferences.studentLike.length>0) {
-          let valid=false;
-          for(const student of classObj.students){
-            for (const studentLike of preferences.studentLike){
-              if(md5(student.id)==studentLike.id){
-                valid=true;
-              }
+          // checks if the studentLike array is not empty
+          if(preferences.studentLike.length>0) {
+          let valid = false;
+          // keeps track of the index of the id in the array
+          let num = 0;
+          // loops through the studentLike[0].inputs array
+          for(const id of preferences.studentLike[0].inputs) {
+            // sets the valid variable to false by default
+            valid = false;
+            // checks if the id exists in the array of students
+            if(classObj.students.find(s => s.id == id))
+            {
+              // if the id exists, it is valid
+              valid = true;
             }
+            // if the id does not exist, it is removed from the array
+            if(valid==false){
+              // removes the id from the array
+              preferences.studentLike[0].inputs.splice(num,1) 
+              // checks if the array is empty
+              if(preferences.studentLike[0].inputs.length<=0) {
+                preferences.studentLike[0].inputs = undefined;
+              }
+              // decrements the index of the array to account for the removed id
+              num--;
+            }
+            // increments the index of the array to check the next id
+            num++;
           }
-          if(valid==false){
-            studentPreferences.splice(i,1) 
+        }
+        // checks if the studentDislike array is not empty
+        if(preferences.studentDislike.length>0) {
+          let valid = false;
+          let num = 0;
+          // loops through the studentDislike[0].inputs array
+          for(const id of preferences.studentDislike[0].inputs) {
+            valid = false;
+            if(classObj.students.find(s => s.id == id))
+            {
+              valid = true;
+            }
+            if(valid==false){
+              preferences.studentDislike[0].inputs.splice(num,1) 
+              if(preferences.studentLike[0].inputs.length<=0)
+              {
+                preferences.studentDislike[0].inputs = undefined;
+              }
+              num--;
+            }
+            num++;
           }
-          }
+        }
       }
-
 
 
       //transfers student preferences to new class
@@ -241,7 +277,10 @@ app.post("/editClass", async (req, res) => {
         for(const preference of studentPreferences){
           if(student.id==preference.id){
             student.preferences = preference.preferences
+            console.log("Students Name\n"+ student.name)
             console.log("Student Preferences\n"+ student.preferences)
+            console.log("Student ID\n"+ student.id)
+            console.log("Student Inputs\n"+ student.preferences.studentLike[0].inputs)
           }
         }
       }
