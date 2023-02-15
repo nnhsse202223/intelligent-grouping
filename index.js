@@ -238,7 +238,9 @@ app.post("/editClass", async (req, res) => {
               preferences.studentLike[0].inputs.splice(num,1) 
               // checks if the array is empty
               if(preferences.studentLike[0].inputs.length<=0) {
-                preferences.studentLike[0].inputs = undefined;
+                // sets the studentLike array to an empty array
+                preferences.studentLike = [];
+                break;
               }
               // decrements the index of the array to account for the removed id
               num--;
@@ -260,9 +262,9 @@ app.post("/editClass", async (req, res) => {
             }
             if(valid==false){
               preferences.studentDislike[0].inputs.splice(num,1) 
-              if(preferences.studentLike[0].inputs.length<=0)
-              {
-                preferences.studentDislike[0].inputs = undefined;
+              if(preferences.studentDislike[0].inputs.length<=0) {
+                preferences.studentDislike = [];
+                break;
               }
               num--;
             }
@@ -277,10 +279,10 @@ app.post("/editClass", async (req, res) => {
         for(const preference of studentPreferences){
           if(student.id==preference.id){
             student.preferences = preference.preferences
-            console.log("Students Name\n"+ student.name)
-            console.log("Student Preferences\n"+ student.preferences)
-            console.log("Student ID\n"+ student.id)
-            console.log("Student Inputs\n"+ student.preferences.studentLike[0].inputs)
+            // console.log("Students Name\n"+ student.name)
+            // console.log("Student Preferences\n"+ student.preferences)
+            // console.log("Student ID\n"+ student.id)
+            // console.log("Student Inputs\n"+ student.preferences.studentLike[0].inputs)
           }
         }
       }
