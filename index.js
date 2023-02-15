@@ -77,11 +77,6 @@ const sendFileOptions = {
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  console.log(`Received a ${req.method} request for ${req.url}`);
-  next();
-});
-
 //Routing
 app.get('/', async (req, res) => {
   res.sendFile('/index.html', sendFileOptions)
@@ -123,7 +118,7 @@ app.get("/formData", async (req, res) => {
   if (user) {
     const classObj = user.classes.find(c => c.id == req.query.class)
     if (classObj) {
-      console.log("\nPreferences", classObj.preferences);
+      //console.log("\nPreferences", classObj.preferences);
       res.json({status: true, preferences: classObj.preferences, className: classObj.name, period: classObj.period, students: classObj.students.map(s => (
         {name: `${s.first} ${s.middle ? `${s.middle}. ` : ""}${s.last}`, id: md5(s.id)}
       ))})
