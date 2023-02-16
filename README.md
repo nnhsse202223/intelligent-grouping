@@ -1,9 +1,6 @@
 # Intelligent-Grouping-App
 ![Intelligent Grouping Logo](/static/images/blue-bg.svg)
 
-![step1](/static/images/step1.png)
-![step2](/static/images/step2.png)
-![step3](/static/images/step3.png)
 ## Overview:
 The Intelligent Grouping web application is a website designed to provide teachers with the tools to group their students together for various classroom purposes, with a high degree of customizability and ease-of-use.
 ## Features:
@@ -65,6 +62,19 @@ The Intelligent Grouping web application is a website designed to provide teache
   * The arrow button in the top right opens and closes the sidebar containing all groups not on the seating chart currently
   * In the sidebar, the trash can button clears all groups from the seating chart (but does not save the clear)
   * The floppy disk icon is the save button, and a loading bar at the top of the screen shows the progress of the save.
+
+## Exporting A CSV File From Infinite Campus
+* First open up campus tools on Infininte Campus:
+![step1](/static/images/step1.png)
+
+* Then go to Ad Hoc Reporting > Data Export:
+![step2](/static/images/step2.png)
+
+* Click “student emails”, “Delimited Values (CSV)”, and additional options:
+![step3](/static/images/step3.png)
+
+* Then press "Export" to download the CSV file to your computer
+
 ## Internal Configuration (gene.js):
 * In the aformentioned file, there are options provided to allow for adjustment of the genetic algorithm for tuning purposes.
   * Quarter Size: 
