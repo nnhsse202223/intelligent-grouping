@@ -1,5 +1,9 @@
 # Intelligent-Grouping-App
 ![Intelligent Grouping Logo](/static/images/blue-bg.svg)
+
+![step1](step1.png)
+![step2](step2.png)
+![step3](step3.png)
 ## Overview:
 The Intelligent Grouping web application is a website designed to provide teachers with the tools to group their students together for various classroom purposes, with a high degree of customizability and ease-of-use.
 ## Features:
