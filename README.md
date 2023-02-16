@@ -65,12 +65,15 @@ The Intelligent Grouping web application is a website designed to provide teache
 
 ## Exporting A CSV File From Infinite Campus
 * First open up campus tools on Infininte Campus:
+
 ![step1](/static/images/step1.png)
 
 * Then go to Ad Hoc Reporting > Data Export:
+
 ![step2](/static/images/step2.png)
 
 * Click “student emails”, “Delimited Values (CSV)”, and additional options:
+
 ![step3](/static/images/step3.png)
 
 * Then press "Export" to download the CSV file to your computer
