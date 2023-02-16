@@ -878,6 +878,17 @@ h1 {
   color: var(--light-gray);
 }
 
+#display-mode {
+  display: block;
+  cursor: pointer;
+}
+
+.group-display {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .close-group {
   font-size: 1.7em;
   color: var(--dark);
