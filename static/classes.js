@@ -1,3 +1,6 @@
+// Description: This file contains the functions that are used to create and edit classes.
+
+// This function creates a new classObj based on the information in the input fields.
 function constructClassFromManual() {
   const classObj = {groupings: []}
 
@@ -8,6 +11,7 @@ function constructClassFromManual() {
   classObj.students = []
   classObj.preferences = []
   
+  // This loop iterates through each student input group and creates a student object for each one.
   for (const inputGroup of Array.from(studentInfoInputs.children)) {
     if (!inputGroup.classList.contains("sizeholder")) {
       const student = {}
@@ -31,6 +35,7 @@ function constructClassFromManual() {
   return classObj
 }
 
+// Constructs a classObj from a CSV file.
 async function constructClassesFromFile(file) {
   let data = await file.text()
   const classObjs = {}
@@ -103,6 +108,7 @@ async function constructClassesFromFile(file) {
   return {valid: true, classObjs: classObjs}
 }
 
+// Sends a post request to the server to save the new classes.
 function saveNewClasses(classObjs) {
   return fetch("/addClasses", {
     method: "POST",
@@ -116,6 +122,7 @@ function saveNewClasses(classObjs) {
   }).then(res => res.json())
 }
 
+// Sends a post request to the server to save the edited class.
 function saveEditedClass(classObj) {
   return fetch("/editClass", {
     method: "POST",
@@ -130,6 +137,7 @@ function saveEditedClass(classObj) {
   }).then(res => res.json())
 }
 
+// This adds a classObj to the sidebar.
 function addClassToUI(classObj) {
   const classElement = document.createElement("div")
   classElement.classList = "class"
@@ -146,6 +154,7 @@ function addClassToUI(classObj) {
   return classElement
 }
 
+// Adds event listeners to the class elements to update the UI when they are clicked.
 function setUpClassEvents(classElement) {
   classElement.addEventListener("click", () => {
     for (const element of Array.from(classListDiv.children)) {
@@ -154,11 +163,13 @@ function setUpClassEvents(classElement) {
       } else {
         element.classList.add("selected")
       }
+      // Updates the UI to show the class.
       showClass(classElement.id)
     }
   })
 }
 
+// Updates the UI to show the class.
 function showClass(id) {
   switchSection(viewClassSection)
   let selectedClass = classes[id].obj
@@ -178,12 +189,13 @@ function showClass(id) {
 }
 
 
-
+// Adds class to classes array and to the UI.
 async function addClass(classObj) {
   classes[classObj.id] = {obj: classObj}
   classes[classObj.id].element = addClassToUI(classObj)
 }
 
+// Takes the constructed class and creates a new modal for user to select from.
 async function uploadClass() {
   startLoad()
   if (uploadClassInput.files[0]) {
