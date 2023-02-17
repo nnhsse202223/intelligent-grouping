@@ -868,9 +868,9 @@ h1 {
 #add-group {
   height: 400px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   cursor: pointer;
 }
 
@@ -879,14 +879,12 @@ h1 {
 }
 
 #display-mode {
+  font-size: 3em;
   display: block;
   cursor: pointer;
-}
-
-.group-display {
   position: absolute;
-  top: 0;
-  right: 0;
+  right: 327.5px;
+  color: var(--dark);
 }
 
 .close-group {
