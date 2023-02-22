@@ -6,6 +6,7 @@
 * excluded: Array.from(excludedStudentsListDiv.children).map(e => e.id)
 */
 
+// Deletes a group from the database
 function deleteGroupFromDB(id, groupingId) {
   return fetch("/deleteGroup", {
     method: "POST",
@@ -20,6 +21,7 @@ function deleteGroupFromDB(id, groupingId) {
   }).then(res => res.json())
 }
 
+// Saves a new grouping to the database
 function saveNewGrouping(grouping, id) {
   return fetch("/addGrouping", {
     method: "POST",
@@ -34,6 +36,7 @@ function saveNewGrouping(grouping, id) {
   }).then(res => res.json())
 }
 
+// Saves everything to the database and the server
 async function completeGroupAdd() {
   startLoad()
   const validateResult = validateGroups()
@@ -51,6 +54,7 @@ async function completeGroupAdd() {
   endLoad()
 }
 
+// Gets the grouping info from passed in grouping
 function getGroupingInfo(grouping) {
   try {
     value = 1
@@ -74,7 +78,7 @@ function getGroupingInfo(grouping) {
 }
 
 
-
+// Saves an edited grouping to the database
 function saveEditedGrouping(grouping, oldId, id) {
   console.log("geg")
   console.log(grouping)
@@ -94,6 +98,7 @@ function saveEditedGrouping(grouping, oldId, id) {
   }).then(res => res.json())
 }
 
+// Saves everything to the database and the server
 async function completeGroupEdit() {
   startLoad()
   const validateResult = validateGroups()
@@ -171,6 +176,8 @@ function editGrouping(grouping) {
   }
 }
 
+// Gets new random groupings
+// Sends a post request to the server with the type of grouping, the number of groups, the class id, and the excluded students
 function getRandomGroups(type, num, id, excluded) {
   return fetch("/randomGroups", {
     method: "POST",
@@ -187,6 +194,7 @@ function getRandomGroups(type, num, id, excluded) {
   }).then(res => res.json())
 }
 
+// Creates modal with students arranged
 function showArrangeStudentsModal() {
   createModal("tall", (modal, exit) => {
     modal.classList.add("arrange-options-modal")
@@ -322,6 +330,7 @@ function showArrangeStudentsModal() {
   })
 }
 
+// Add a group to the group scatter
 function addGroup() {
   const groupContainer = document.createElement("div")
   groupContainer.classList.add("group-container")
@@ -346,6 +355,7 @@ function addGroup() {
   return groupContainer
 }
 
+// Sets the groups to the given groups
 function setGroups(groups) {
   for (const group of Array.from(groupScatter.children)) {
     if (group.id != "add-group") {
@@ -363,6 +373,7 @@ function setGroups(groups) {
   }
 }
 
+// Normalizes the group titles
 function normalizeGroupTitles() {
   const groups = Array.from(groupScatter.children)
   for (let i = 0; i < groups.length-1; i++) {
@@ -372,6 +383,7 @@ function normalizeGroupTitles() {
   }
 }
 
+// Constructs a grouping object from the UI
 function constructGroupingFromUI() {
   const groupObjs = []
   const excludedObjs = []
@@ -390,6 +402,7 @@ function constructGroupingFromUI() {
   }
 }
 
+// Tests validity of the groupings
 function validateGroups() {
   if (groupNameInput.value) {
     groupNameInput.classList.remove("invalid")
@@ -495,6 +508,7 @@ function showActionsModal(grouping,groupingContainer){
   })
 }
 
+// Opens accept student modal
 function openAcceptStudent(student) {
   student.classList.add("selected")
   state.info.student = student
