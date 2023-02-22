@@ -233,6 +233,7 @@ async function uploadClass() {
   endLoad()
 }
 
+// Shows the modal for adding a class.
 function showAddClassModal() {
   createModal("small", (modal, exit) => {
     modal.classList.add("add-class-modal")
@@ -259,7 +260,7 @@ function showAddClassModal() {
 }
 
 
-
+// Allows the user to edit a class.
 function editClass(classObj) {
   if (classObj) {
     statusTitle.innerText = "Edit Class"
@@ -286,7 +287,7 @@ function editClass(classObj) {
 }
 
 
-
+// Adds the inputs for a student to the UI.
 function addStudentInputs(student) {
   const studentInfoContainer = document.createElement("div")
   studentInfoContainer.classList = "student-info-container"
@@ -304,6 +305,7 @@ function addStudentInputs(student) {
   addList(studentInfoContainer, studentInfoInputs)
 }
 
+// Makes sure all the inputs are valid.
 function validateClassInputs() {
   let status = {valid: true}
   for (const input of Array.from(classInfoInputs.children)) {
@@ -365,6 +367,7 @@ function validateClassInputs() {
   return status
 }
 
+// Deletes a class from the database.
 function deleteClassFromDB(id) {
   return fetch("/deleteClass", {
     method: "POST",
@@ -378,6 +381,7 @@ function deleteClassFromDB(id) {
   }).then(res => res.json())
 }
 
+// Deletes a class from the UI.
 async function deleteClass(id) {
   startLoad()
   const deleteResult = await deleteClassFromDB(id)
@@ -392,6 +396,7 @@ async function deleteClass(id) {
   endLoad()
 }
 
+// Exits the edit class section.
 function exitEditClass() {
   if (state.mode == 3) {
     showClass(state.info.id)
@@ -402,6 +407,7 @@ function exitEditClass() {
   }
 }
 
+// Saves a new class to the database.
 async function completeClassAdd() {
   startLoad()
   const status = validateClassInputs()
@@ -422,6 +428,7 @@ async function completeClassAdd() {
   endLoad()
 }
 
+// Saves an edited class to the database.
 async function completeClassEdit() {
   startLoad()
   const status = validateClassInputs()
@@ -444,6 +451,7 @@ async function completeClassEdit() {
   endLoad()
 }
 
+// Event listeners
 addClassBtn.addEventListener("click", showAddClassModal)
 uploadClassInput.addEventListener("change", uploadClass)
 addStudentBtn.addEventListener("click", addStudentInputs)
@@ -495,12 +503,15 @@ function deleteConfirm(id){
   })
 }
 
+// Edit class event listener
 editClassBtn.addEventListener("click", () => {
   editClass(classes[state.info.id])
 })
 
+// Delete class event listener
 deleteClassBtn.addEventListener("click", () => {
   deleteConfirm(state.info.id)
 })
 
+// Cancel class event listener
 cancelClassBtn.addEventListener("click", exitEditClass)
