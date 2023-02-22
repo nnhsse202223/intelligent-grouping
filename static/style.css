@@ -885,6 +885,7 @@ h1 {
   position: absolute;
   right: 327.5px;
   color: var(--dark);
+  border: none;
 }
 
 .close-group {
