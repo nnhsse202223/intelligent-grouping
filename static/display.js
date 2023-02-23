@@ -1,3 +1,3 @@
-displayModeBtn.addEventListener("click", () => {
+openDisplayMode.addEventListener("click", () => {
     switchSection(displayMode)
 })

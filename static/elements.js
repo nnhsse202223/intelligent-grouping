@@ -41,8 +41,8 @@ const viewResponses = document.getElementById("view-responses")
 const openTutorial = document.getElementById("open-tutorial")
 const tutorialSection = document.getElementById("tutorial-sec")
 const seatingChartSection = document.getElementById("seating-chart-sec")
-const openDisplayMode = document.getElementById("display-mode")
-const displayMode = docuemnt.getElementById()
+const openDisplayMode = document.getElementById("open-display")
+const displayMode = document.getElementById("display-mode")
 
 const chartGrid = document.getElementById("chart-grid")
 

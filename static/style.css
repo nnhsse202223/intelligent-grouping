@@ -878,7 +878,7 @@ h1 {
   color: var(--light-gray);
 }
 
-#display-mode {
+#open-display {
   font-size: 3em;
   display: block;
   cursor: pointer;
@@ -887,6 +887,7 @@ h1 {
   color: var(--dark);
   border: none;
 }
+
 
 .close-group {
   font-size: 1.7em;
@@ -1137,6 +1138,16 @@ h1 {
   justify-content: flex-start;
   align-items: center;
 }
+
+#display-mode {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+#display-mode.visible {
+  visibility: visible;
+} 
 
 #open-tutorial {
   color: white;
