@@ -352,7 +352,7 @@ body {
   top: 0;
   left: 0;
   visibility: hidden;
-  opacity: 0;
+  opacity: 1;
   transition: 0.3s all;
   padding: 50px 25px;
 }
@@ -1140,14 +1140,11 @@ h1 {
 }
 
 #display-mode {
-  display: flex;
+  display: block;
   height: 100%;
   width: 100%;
-}
-
-#display-mode.visible {
   visibility: visible;
-} 
+}
 
 #open-tutorial {
   color: white;
