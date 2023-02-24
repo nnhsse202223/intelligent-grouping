@@ -220,7 +220,9 @@ async function addClass(classObj) {
   classes[classObj.id].element = addClassToUI(classObj)
 }
 
-// Takes the constructed class and creates a new modal for user to select from.
+/*
+ * @description - Takes the constructed class and creates a new modal for user to select from.
+ */
 async function uploadClass() {
   startLoad()
   if (uploadClassInput.files[0]) {
@@ -258,7 +260,9 @@ async function uploadClass() {
   endLoad()
 }
 
-// Shows the modal for adding a class.
+/*
+ * @description - Shows the modal for adding a class.
+ */
 function showAddClassModal() {
   createModal("small", (modal, exit) => {
     modal.classList.add("add-class-modal")
@@ -284,8 +288,10 @@ function showAddClassModal() {
   })
 }
 
-
-// Allows the user to edit a class.
+/*
+ * @param classObj - The classObj that is being edited.
+ * @description - This function allows the user to edit a class.
+ */
 function editClass(classObj) {
   if (classObj) {
     statusTitle.innerText = "Edit Class"
@@ -311,8 +317,10 @@ function editClass(classObj) {
   switchSection(editClassSection)
 }
 
-
-// Adds the inputs for a student to the UI.
+/*
+ * @param student - The student object that is being added to the UI.
+ * @description - This function adds the inputs for a student to the UI.
+ */
 function addStudentInputs(student) {
   const studentInfoContainer = document.createElement("div")
   studentInfoContainer.classList = "student-info-container"
@@ -330,7 +338,10 @@ function addStudentInputs(student) {
   addList(studentInfoContainer, studentInfoInputs)
 }
 
-// Makes sure all the inputs are valid.
+/*
+ * @description - This function makes sure all the inputs are valid.
+ * @returns - Returns an object with a valid property and an error property if invalid (error property is optional).
+ */
 function validateClassInputs() {
   let status = {valid: true}
   for (const input of Array.from(classInfoInputs.children)) {
@@ -392,7 +403,10 @@ function validateClassInputs() {
   return status
 }
 
-// Deletes a class from the database.
+/*
+ * @param id - The id of the class to be deleted.
+ * @description - This function deletes a class from the database.
+ */
 function deleteClassFromDB(id) {
   return fetch("/deleteClass", {
     method: "POST",
@@ -406,7 +420,10 @@ function deleteClassFromDB(id) {
   }).then(res => res.json())
 }
 
-// Deletes a class from the UI.
+/*
+ * @param id - The id of the class to be deleted.
+ * @description - This function deletes a class from the UI and switches user to the welcome section.
+ */
 async function deleteClass(id) {
   startLoad()
   const deleteResult = await deleteClassFromDB(id)
@@ -421,7 +438,10 @@ async function deleteClass(id) {
   endLoad()
 }
 
-// Exits the edit class section.
+/*
+ * @description - This function exits the edit class section and either shows the class that was being edited
+ *                or switches to the welcome section depending on the state.
+ */
 function exitEditClass() {
   if (state.mode == 3) {
     showClass(state.info.id)
@@ -432,7 +452,9 @@ function exitEditClass() {
   }
 }
 
-// Saves a new class to the database.
+/*
+ * @description - This function saves a NEW class to the database.
+ */
 async function completeClassAdd() {
   startLoad()
   const status = validateClassInputs()
@@ -453,7 +475,9 @@ async function completeClassAdd() {
   endLoad()
 }
 
-// Saves an edited class to the database.
+/*
+ * @description - This function saves an EDITED class to the database.
+ */
 async function completeClassEdit() {
   startLoad()
   const status = validateClassInputs()
