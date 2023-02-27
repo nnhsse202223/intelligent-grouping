@@ -276,3 +276,6 @@ viewResponses.addEventListener("click", async (e) =>{
   e.stopPropagation()
   showResponses()
 })
+reloadResponses.addEventListener("click", async (e) =>{
+  showResponses()
+})
