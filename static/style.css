@@ -352,7 +352,7 @@ body {
   top: 0;
   left: 0;
   visibility: hidden;
-  opacity: 1;
+  opacity: 0;
   transition: 0.3s all;
   padding: 50px 25px;
 }
