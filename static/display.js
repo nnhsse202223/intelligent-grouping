@@ -1,3 +1,5 @@
 openDisplayMode.addEventListener("click", () => {
-    switchSection(displayMode)
+    // mainSidebar.style.display = "none";
+    showFade(displayMode);
+    // switchSection(displayMode)
 })

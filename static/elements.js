@@ -52,3 +52,4 @@ const saveChartBtn = document.getElementById('save-chart')
 const resetChartBtn = document.getElementById('reset-chart')
 
 const chartSidebar = document.getElementById("chart-sidebar")
+const mainSidebar = document.getElementById("sidebar")

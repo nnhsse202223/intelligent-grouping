@@ -1143,7 +1143,15 @@ h1 {
   display: block;
   height: 100%;
   width: 100%;
+  top: -75px;
+  left: -300px;
+  opacity: 0;
   visibility: hidden;
+}
+
+#display-mode.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 #open-tutorial {
