@@ -276,11 +276,3 @@ viewResponses.addEventListener("click", async (e) =>{
   e.stopPropagation()
   showResponses()
 })
-reloadResponses.addEventListener("click", async (e) =>{
-  e.stopPropagation()
-  //somethingOrOther()
-  // for(let i = 0; i < responsesList.children.length; i++) {
-  //   updateStudentInformation(responsesList.children(i));
-  // }
-    showResponses()
-})
