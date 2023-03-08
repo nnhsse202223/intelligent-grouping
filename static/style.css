@@ -1162,6 +1162,10 @@ h1 {
   cursor: pointer;
 }
 
+#reload-responses {
+  cursor: pointer;
+}
+
 .accordion-item{
   background-color: var(--accent);
   border-radius:.4rem;

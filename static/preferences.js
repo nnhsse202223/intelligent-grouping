@@ -282,5 +282,5 @@ reloadResponses.addEventListener("click", async (e) =>{
   // for(let i = 0; i < responsesList.children.length; i++) {
   //   updateStudentInformation(responsesList.children(i));
   // }
-  showResponses()
+    showResponses()
 })
