@@ -1141,11 +1141,12 @@ h1 {
 
 #display-mode {
   display: block;
-  height: 100%;
-  width: 121.739130434%;
+  height: 100vh;
+  width: 100vw;
   top: -75px;
   left: -300px;
   opacity: 0;
+  padding: 0px 0px 0px 0px;
   visibility: hidden;
 }
 
