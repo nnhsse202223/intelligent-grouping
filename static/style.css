@@ -884,6 +884,7 @@ h1 {
   cursor: pointer;
   position: absolute;
   right: 327.5px;
+  top: 17.5px;
   color: var(--dark);
   border: none;
 }
