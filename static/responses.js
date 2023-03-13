@@ -131,3 +131,12 @@ reloadResponses.addEventListener("click", async (e) =>{
   // }
   showResponses()
 })
+
+/*
+SOULTION TO THE REFRESH PROBLEM \'o'/
+
+setTimeout(functionName,howeverManyMillisecondsBetweenFunctionCalls)
+
+funtionName - function that gets form data and puts it into the database and UI
+                    Might need to make a new function for this
+*/
