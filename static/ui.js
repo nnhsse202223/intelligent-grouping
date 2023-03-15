@@ -56,6 +56,10 @@ function hideFade(element) {
   element.classList.remove("visible")
 }
 
+function fullscreen(element) {
+  element.classList.add("fullscreen")
+}
+
 function switchSection(to) {
   const sections = Array.from(document.getElementsByClassName("section"))
   for (const section of sections) {
