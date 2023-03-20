@@ -56,6 +56,14 @@ function hideFade(element) {
   element.classList.remove("visible")
 }
 
+function showFullscreen(element) {
+  element.classList.add("fullscreen")
+}
+
+function hideFullscreen(element) {
+  element.classList.remove("fullscreen")
+}
+
 function switchSection(to) {
   const sections = Array.from(document.getElementsByClassName("section"))
   for (const section of sections) {
@@ -64,6 +72,17 @@ function switchSection(to) {
     }
   }
   showFade(to)
+}
+
+function switchMultipleSections(sec1, sec2 ) {
+  const sections = Array.from(document.getElementsByClassName("section"))
+  for (const section of sections) {
+    if (section != sec1 || section != sec2) {
+      hideFade(section)
+    }
+  }
+  showFade(sec1)
+  showFade(sec2)
 }
 
 function removeList(element) {

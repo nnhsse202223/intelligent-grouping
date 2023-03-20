@@ -1,6 +1,6 @@
 openDisplayMode.addEventListener("click", () => {
     // mainSidebar.style.display = "none";
-    showFade(displayMode)
-    showFade(displayGroupScatter)
-    switchSection(displayMode)
+    // showFade(displayGroupScatter)
+    switchMultipleSections(displayMode, groupScatter)
+    fullscreen(groupScatter)
 })

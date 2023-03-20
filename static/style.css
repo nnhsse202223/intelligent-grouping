@@ -697,6 +697,14 @@ h1 {
   overflow-y: auto;
 }
 
+.fullscreen {
+  /* display: block; */
+  top: 0px;
+  right: 0px;
+  height: 100vh;
+  width: 100vw;
+}
+
 #group-actions-div {
   width: 100%;
   display: flex;
@@ -1156,7 +1164,7 @@ h1 {
   visibility: visible;
 }
 
-#display-group-scatter {
+/* #display-group-scatter {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1171,7 +1179,7 @@ h1 {
 #display-group-scatter.visible {
   opacity: 1;
   visibility: visible;
-}
+} */
 
 #open-tutorial {
   color: white;
