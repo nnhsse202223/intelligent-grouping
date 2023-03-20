@@ -195,6 +195,8 @@ app.post("/addClasses", async (req, res) => {
   }
 })
 
+app.get("/updateClasses", async (req, res) => {})
+
 app.post("/editClass", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -397,6 +399,14 @@ app.post("/deletePreference", async (req, res) => {
     } else {
       res.json({status: false, error: "No Class Found"})
     }
+  }
+})
+
+app.get("/getClasses", async (req, res) => {
+  const verification = await verifyUser(req.header("token"))
+  if (verification.status) {
+    user = User.findOne({id: verification.user.sub}).exec()
+    res.json({classes: user.classes})
   }
 })
 

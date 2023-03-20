@@ -47,6 +47,13 @@ function clearSideText(list) {
 }
 
 function updateStudentInformation(index) {
+  let databaseClasses = fetch("/getClasses", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: auth2.currentUser.get().getAuthResponse().id_token
+    }}).then(response => response.json())
+
   let thisStudent = classes[state.info.id].obj.students[index]
 
   let list = document.getElementById("given-responses")
@@ -130,6 +137,7 @@ reloadResponses.addEventListener("click", async (e) =>{
   //   updateStudentInformation(responsesList.children(i));
   // }
   showResponses()
+  console.log(classes)
 })
 
 /*
