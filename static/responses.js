@@ -47,12 +47,6 @@ function clearSideText(list) {
 }
 
 function updateStudentInformation(index) {
-  let databaseClasses = fetch("/getClasses", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      token: auth2.currentUser.get().getAuthResponse().id_token
-    }}).then(response => response.json())
 
   let thisStudent = classes[state.info.id].obj.students[index]
 
@@ -131,13 +125,17 @@ function findStudentById(id){
 }
 
 reloadResponses.addEventListener("click", async (e) =>{
-  e.stopPropagation()
-  //somethingOrOther()
-  // for(let i = 0; i < responsesList.children.length; i++) {
-  //   updateStudentInformation(responsesList.children(i));
-  // }
+  //e.stopPropagation()
+  let databaseClasses = await fetch("/getClasses", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: auth2.currentUser.get().getAuthResponse().id_token
+    }}).then(response => response.json())//.then((json)=> {console.log(json)})
   showResponses()
-  console.log(classes)
+  //console.log("old classes: \n" + classes) 
+  //console.log(databaseClasses)
+  //console.log("database classes: \n" + databaseClasses.classes)
 })
 
 /*
