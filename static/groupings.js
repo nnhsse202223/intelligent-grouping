@@ -343,7 +343,6 @@ function addGroup() {
   groupContainer.appendChild(closeGroup)
   groupContainer.appendChild(studentList)
   groupScatter.insertBefore(groupContainer, addGroupBtn)
-  displayGroupScatter.insertBefore(groupContainer, addGroupBtn)
   return groupContainer
 }
 

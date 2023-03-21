@@ -692,6 +692,7 @@ h1 {
   align-items: flex-start;
   grid-area: 1 / 1 / 2 / 2;
   padding: 20px;
+  color: white;
   flex-wrap: wrap;
   height: calc(100vh - 75px);
   overflow-y: auto;
@@ -1162,6 +1163,22 @@ h1 {
 #display-mode.visible {
   opacity: 1;
   visibility: visible;
+}
+
+.fullscreen {
+  display: block;
+  top: -75px;
+  right: -300px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.fullscreen {
+  display: block;
+  top: -75px;
+  right: -300px;
+  height: 100vh;
+  width: 100vw;
 }
 
 /* #display-group-scatter {
