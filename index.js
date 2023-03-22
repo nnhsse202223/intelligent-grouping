@@ -402,11 +402,9 @@ app.post("/deletePreference", async (req, res) => {
 
 app.get("/getClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
-  console.log('get classes thingamabob')
-  console.log(verification)
   if (verification.status) {
     let user = await User.findOne({id: verification.user.sub}).exec()
-    console.log(user)
+    console.log("\n\nUSER:\n\n"+user)
     res.json({classes: user.classes})
   }
 })

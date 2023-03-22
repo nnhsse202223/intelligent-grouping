@@ -131,11 +131,21 @@ reloadResponses.addEventListener("click", async (e) =>{
     headers: {
       "Content-Type": "application/json",
       token: auth2.currentUser.get().getAuthResponse().id_token
-    }}).then(response => response.json())//.then((json)=> {console.log(json)})
-  showResponses()
-  //console.log("old classes: \n" + classes) 
-  //console.log(databaseClasses)
-  //console.log("database classes: \n" + databaseClasses.classes)
+    }}).then(response => response.json())//.then((json)=> {console.log(json.classes)})
+    //console.log(classes)
+
+    //Things surrounded by // and \\ are important notes
+    //classes structure (classes is an object where every key is a class id and the value is an object with the class object and an array of student ids)
+    //classes = {classId: {obj: classObj, element: //this is an important div element for the button for the specific class on the left panel we need to find a way to not lose this when recreating the classes array\\}
+    
+    //json structure from database (json is an array of class objects)
+    //[{groupings:groupings, id:classId //<-very important... is the same as the object key in the classes array\\, name:name, period:period, students:students, _id:_id}]
+
+    //loops through the classes array from the GET requst (json)
+    for(let i = 0; i < databaseClasses.length; i++) {
+      //recreates the classes array from the GET request restoring the old element and new class object
+      classes[databaseClasses[i].id] = {element:classes[databaseClasses[i].id].element, obj:databaseClasses[i]}
+    }
 })
 
 /*
