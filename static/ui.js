@@ -64,6 +64,10 @@ function hideFullscreen(element) {
   element.classList.remove("fullscreen")
 }
 
+// function top(element) {
+//   element.classList.add("top")
+// }
+
 function switchSection(to) {
   const sections = Array.from(document.getElementsByClassName("section"))
   for (const section of sections) {
@@ -83,6 +87,7 @@ function switchMultipleSections(sec1, sec2 ) {
   }
   showFade(sec1)
   showFade(sec2)
+  // top(sec2)
 }
 
 function removeList(element) {
