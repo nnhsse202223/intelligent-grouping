@@ -1,3 +1,4 @@
+// stores the id of the current student being viewed
 let currentStudent;
 
 function showResponses() {
@@ -34,7 +35,7 @@ function appendClassStudents(){
     newOption.setAttribute('id', classes[state.info.id].obj.students[i].id)
     newOption.setAttribute('index', i)
     newOption.addEventListener('click', function(){
-      // updateStudentInformation(newOption.getAttribute('index'));
+      // updates current student and reloads when they switch students
       currentStudent = newOption.getAttribute('index');
       reloadPreferencesDisplay(currentStudent);
     });
@@ -128,34 +129,8 @@ function findStudentById(id){
   }
 }
 
-// reloadResponses.addEventListener("click", async (e) =>{
-//   //e.stopPropagation()
-//   let databaseClasses = await fetch("/getClasses", {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//       token: auth2.currentUser.get().getAuthResponse().id_token
-//     }}).then(response => response.json())//.then((json)=> {console.log(json.classes)})
-//     // console.log(classes)
-//     // console.log(databaseClasses)
-
-//     //Things surrounded by // and \\ are important notes
-//     //classes structure (classes is an object where every key is a class id and the value is an object with the class object and an array of student ids)
-//     //classes = {classId: {obj: classObj, element: //this is an important div element for the button for the specific class on the left panel we need to find a way to not lose this when recreating the classes array\\}
-    
-//     //json structure from database (json is an array of class objects)
-//     //[{groupings:groupings, id:classId //<-very important... is the same as the object key in the classes array\\, name:name, period:period, students:students, _id:_id}]
-
-//     //loops through the classes array from the GET requst (json)
-//     for(let i = 0; i < databaseClasses.classes.length; i++) {
-//       //recreates the classes array from the GET request restoring the old element and new class object
-//       classes[databaseClasses.classes[i].id] = {element:classes[databaseClasses.classes[i].id].element, obj:databaseClasses.classes[i]}
-//       // console.log(databaseClasses[i].id)
-//     }
-// })
-
+// updates classes before running usual updateStudentInformation mathod
 async function reloadPreferencesDisplay(index) {
-  console.log("reloading classes")
   //e.stopPropagation()
   let databaseClasses = await fetch("/getClasses", {
     method: "GET",
@@ -163,8 +138,6 @@ async function reloadPreferencesDisplay(index) {
       "Content-Type": "application/json",
       token: auth2.currentUser.get().getAuthResponse().id_token
     }}).then(response => response.json())//.then((json)=> {console.log(json.classes)})
-    // console.log(classes)
-    // console.log(databaseClasses)
 
     //Things surrounded by // and \\ are important notes
     //classes structure (classes is an object where every key is a class id and the value is an object with the class object and an array of student ids)
@@ -177,7 +150,6 @@ async function reloadPreferencesDisplay(index) {
     for(let i = 0; i < databaseClasses.classes.length; i++) {
       //recreates the classes array from the GET request restoring the old element and new class object
       classes[databaseClasses.classes[i].id] = {element:classes[databaseClasses.classes[i].id].element, obj:databaseClasses.classes[i]}
-      // console.log(databaseClasses[i].id)
     }
 
     updateStudentInformation(index)
