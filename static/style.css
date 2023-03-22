@@ -698,7 +698,7 @@ h1 {
 }
 
 .fullscreen {
-  opacity: 0;
+  opacity: 1;
   position: absolute;
   display: block;
   top: -75px;
