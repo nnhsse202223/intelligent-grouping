@@ -148,6 +148,13 @@ reloadResponses.addEventListener("click", async (e) =>{
       classes[databaseClasses.classes[i].id] = {element:classes[databaseClasses.classes[i].id].element, obj:databaseClasses.classes[i]}
       // console.log(databaseClasses[i].id)
     }
+
+    /*
+     This brings the user back to the select student screen.
+     Doing so allows the preferences to be updated in the UI without having to click the selected student again.
+     This makes it easier for the user to see the changes.
+    */
+    showResponses()
 })
 
 /*
