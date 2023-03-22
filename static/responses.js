@@ -132,7 +132,8 @@ reloadResponses.addEventListener("click", async (e) =>{
       "Content-Type": "application/json",
       token: auth2.currentUser.get().getAuthResponse().id_token
     }}).then(response => response.json())//.then((json)=> {console.log(json.classes)})
-    //console.log(classes)
+    // console.log(classes)
+    // console.log(databaseClasses)
 
     //Things surrounded by // and \\ are important notes
     //classes structure (classes is an object where every key is a class id and the value is an object with the class object and an array of student ids)
@@ -142,9 +143,10 @@ reloadResponses.addEventListener("click", async (e) =>{
     //[{groupings:groupings, id:classId //<-very important... is the same as the object key in the classes array\\, name:name, period:period, students:students, _id:_id}]
 
     //loops through the classes array from the GET requst (json)
-    for(let i = 0; i < databaseClasses.length; i++) {
+    for(let i = 0; i < databaseClasses.classes.length; i++) {
       //recreates the classes array from the GET request restoring the old element and new class object
-      classes[databaseClasses[i].id] = {element:classes[databaseClasses[i].id].element, obj:databaseClasses[i]}
+      classes[databaseClasses.classes[i].id] = {element:classes[databaseClasses.classes[i].id].element, obj:databaseClasses.classes[i]}
+      // console.log(databaseClasses[i].id)
     }
 })
 
