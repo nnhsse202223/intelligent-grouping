@@ -125,7 +125,11 @@ function findStudentById(id){
 }
 
 reloadResponses.addEventListener("click", async (e) =>{
-  //e.stopPropagation()
+  
+  //Gets the index of the selected student
+  let currentIndex = document.getElementById("student-selector").selectedIndex
+  //console.log(currentIndex)
+
   let databaseClasses = await fetch("/getClasses", {
     method: "GET",
     headers: {
@@ -155,13 +159,7 @@ reloadResponses.addEventListener("click", async (e) =>{
      This makes it easier for the user to see the changes.
     */
     showResponses()
+
+    //This keeps the UI on the same student that was selected before the reload
+    
 })
-
-/*
-SOULTION TO THE REFRESH PROBLEM \'o'/
-
-setTimeout(functionName,howeverManyMillisecondsBetweenFunctionCalls)
-
-funtionName - function that gets form data and puts it into the database and UI
-                    Might need to make a new function for this
-*/
