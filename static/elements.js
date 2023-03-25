@@ -43,7 +43,7 @@ const tutorialSection = document.getElementById("tutorial-sec")
 const seatingChartSection = document.getElementById("seating-chart-sec")
 const openDisplayMode = document.getElementById("open-display")
 const displayMode = document.getElementById("display-mode")
-
+const fullGroupScatter = document.getElementById("fullscreen-group-scatter")
 
 const chartGrid = document.getElementById("chart-grid")
 

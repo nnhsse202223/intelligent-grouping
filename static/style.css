@@ -697,11 +697,23 @@ h1 {
   overflow-y: auto;
 }
 
+#fullscreen-group-scatter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  grid-area: 1 / 1 / 2 / 2;
+  padding: 0px;
+  flex-wrap: wrap;
+  height: calc(100vh - 75px);
+  overflow-y: auto;
+}
+
 .fullscreen {
   opacity: 1;
   position: absolute;
   visibility: visible !important;
-  top: -75px !important;
+  top: 0px !important;
   right: -300px !important;
   height: 100vh !important;
   width: 100vw !important;
@@ -864,7 +876,7 @@ h1 {
   background-color: var(--light-bg-alt);
   border-radius: 16px;
   padding: 10px;
-  margin: 20px;
+  margin: 10px;
   position: relative;
 }
 
@@ -1152,7 +1164,7 @@ h1 {
 }
 
 #display-mode {
-  display: block;
+  display: grid;
   height: 100vh;
   width: 100vw;
   top: -75px;
