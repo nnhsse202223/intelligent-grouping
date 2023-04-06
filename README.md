@@ -12,6 +12,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Input user preferences through automatically generated forms for viewing and group creation
 * Easy-to-find tutorial in the top right corner of all screens, accessible by a single click
 * Organize groups on a grid for seating charts
+* Fullscreen mode to view all groupings in a class
 ## Instructions:
 * After the website finishes loading, simply press the "Sign in with Google" button and sign in using whatever email you wish, keeping in mind that that email is your account for this website.
   * Currently only naperville203.org organization emails are permitted
@@ -62,6 +63,9 @@ The Intelligent Grouping web application is a website designed to provide teache
   * The arrow button in the top right opens and closes the sidebar containing all groups not on the seating chart currently
   * In the sidebar, the trash can button clears all groups from the seating chart (but does not save the clear)
   * The floppy disk icon is the save button, and a loading bar at the top of the screen shows the progress of the save.
+* Instructions for the fullscreen mode
+  * From the view class screen, click the "Create Grouping" button
+  * On the create grouping page, select the fullscreen icon
 
 ## Exporting A CSV File From Infinite Campus
 * First open up campus tools on Infininte Campus:
