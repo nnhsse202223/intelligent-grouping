@@ -154,5 +154,7 @@ reloadResponses.addEventListener("click", async (e) =>{
     }
 
     //This keeps the UI on the same student that was selected before the reload
-    updateStudentInformation(currentIndex)
+    if(currentIndex != -1){
+      updateStudentInformation(currentIndex)
+    }
 })
