@@ -1,3 +1,5 @@
+// This file is used to handle the login and logout of the user (authentication)
+
 let auth2
 let currentUser
 gapi.load('auth2', () => {

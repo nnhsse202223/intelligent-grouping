@@ -1,6 +1,9 @@
 // stores the id of the current student being viewed
 let currentStudent = -1;
 
+/*
+ * @description - Shows the responses of the students in the class when the "Responses" button is clicked
+ */
 function showResponses() {
     statusTitle.innerText = "Student Responses"
     switchSection(responsesSection)
@@ -13,6 +16,9 @@ function showResponses() {
     appendClassStudents();
 }
 
+/*
+ * @description - Displays the responses of the students in the class
+ */
 function somethingOrOther(){
   for(let i = 0; i < classes[state.info.id].obj.students.length; i++) {
     
@@ -45,12 +51,18 @@ function appendClassStudents(){
   }
 }
 
+/*
+ * @description - Clears the text in the side panel
+ */
 function clearSideText(list) {
   while(list.firstChild) {
     list.removeChild(list.firstChild);
   }
 }
 
+/*
+ * @description - Updates the side panel with the student's responses
+ */
 function updateStudentInformation(index) {
 
   let thisStudent = classes[state.info.id].obj.students[index]
@@ -121,6 +133,9 @@ function updateStudentInformation(index) {
   }
 }
 
+/*
+ * @description - Finds a student by their id
+ */
 function findStudentById(id){
   for(let i = 0; i < classes[state.info.id].obj.students.length; i++) {
     if(classes[state.info.id].obj.students[i].id == id) {

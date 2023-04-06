@@ -6,6 +6,11 @@
 * excluded: Array.from(excludedStudentsListDiv.children).map(e => e.id)
 */
 
+/*
+ * @param {String} id - The id of the group to delete.
+ * @param {String} groupingId - The id of the grouping the group is in.
+ * @description - Deletes the group from the database.
+ */
 function deleteGroupFromDB(id, groupingId) {
   return fetch("/deleteGroup", {
     method: "POST",
@@ -20,6 +25,11 @@ function deleteGroupFromDB(id, groupingId) {
   }).then(res => res.json())
 }
 
+/*
+ * @param {Object} grouping - The grouping to save.
+ * @param {String} id - The id of the class.
+ * @description - Saves the new grouping to the database.
+ */
 function saveNewGrouping(grouping, id) {
   return fetch("/addGrouping", {
     method: "POST",
@@ -34,6 +44,9 @@ function saveNewGrouping(grouping, id) {
   }).then(res => res.json())
 }
 
+/*
+ * @description - Saves the new grouping to the database and the server.
+ */
 async function completeGroupAdd() {
   startLoad()
   const validateResult = validateGroups()
@@ -51,6 +64,11 @@ async function completeGroupAdd() {
   endLoad()
 }
 
+/*
+ * @param {Object} grouping - The grouping to get info from.
+ * @description - Gets the grouping info from passed in grouping.
+ * @returns {Object} - The grouping info.
+ */
 function getGroupingInfo(grouping) {
   try {
     value = 1
@@ -73,8 +91,12 @@ function getGroupingInfo(grouping) {
   }
 }
 
-
-
+/*
+ * @param {Object} grouping - The grouping to save.
+ * @param {String} oldId - The old id of the grouping.
+ * @param {String} id - The id of the class.
+ * @description - Saves the edited grouping to the database.
+ */
 function saveEditedGrouping(grouping, oldId, id) {
   console.log("geg")
   console.log(grouping)
@@ -94,6 +116,9 @@ function saveEditedGrouping(grouping, oldId, id) {
   }).then(res => res.json())
 }
 
+/*
+ * @description - Saves the edited grouping to the database and the server.
+ */
 async function completeGroupEdit() {
   startLoad()
   const validateResult = validateGroups()
@@ -116,6 +141,12 @@ async function completeGroupEdit() {
 
 
 var initialName = "" // Initial Value of the group name when edited.
+
+/*
+ * @param {Object} grouping - The grouping to edit.
+ * @description - Edits the grouping passed in.
+ * @returns {undefined}
+ */
 function editGrouping(grouping) {
   if (grouping) {
     statusTitle.innerText = "Edit Group"
@@ -171,6 +202,14 @@ function editGrouping(grouping) {
   }
 }
 
+/*
+ * @param {string} type - The type of grouping to be created
+ * @param {number} num - The number of groups to be created
+ * @param {string} id - The id of the class
+ * @param {string[]} excluded - The ids of the students to be excluded
+ * @description - Gets new random groupings (Sends a post request to the server with the type of grouping, 
+ *                the number of groups, the class id, and the excluded students)
+ */
 function getRandomGroups(type, num, id, excluded) {
   return fetch("/randomGroups", {
     method: "POST",
@@ -186,7 +225,9 @@ function getRandomGroups(type, num, id, excluded) {
     })
   }).then(res => res.json())
 }
-
+/*
+ * @description - Creates a modal with the students arranged in groups*
+ */
 function showArrangeStudentsModal() {
   createModal("tall", (modal, exit) => {
     modal.classList.add("arrange-options-modal")
@@ -322,6 +363,10 @@ function showArrangeStudentsModal() {
   })
 }
 
+/*
+ * @description - Adds a group to the group scatter
+ * @return {HTMLElement} The group container
+ */
 function addGroup() {
   const groupContainer = document.createElement("div")
   groupContainer.classList.add("group-container")
@@ -346,6 +391,10 @@ function addGroup() {
   return groupContainer
 }
 
+/*
+  * @param {Array} groups - The groups to set the group scatter to
+  * @description - Sets the groups to the given groups
+  */
 function setGroups(groups) {
   for (const group of Array.from(groupScatter.children)) {
     if (group.id != "add-group") {
@@ -363,6 +412,9 @@ function setGroups(groups) {
   }
 }
 
+/*
+ * @description - Normalizes the group titles (makes the group titles more readable)
+ */
 function normalizeGroupTitles() {
   const groups = Array.from(groupScatter.children)
   for (let i = 0; i < groups.length-1; i++) {
@@ -372,6 +424,10 @@ function normalizeGroupTitles() {
   }
 }
 
+/*
+ * @description - Constructs a grouping object from the UI
+ * @returns {Object} - The grouping object
+ */
 function constructGroupingFromUI() {
   const groupObjs = []
   const excludedObjs = []
@@ -390,6 +446,10 @@ function constructGroupingFromUI() {
   }
 }
 
+/*
+ * @description - Tests validity of the groupings
+ * @returns {Object} - {valid: boolean, error: string}
+ */
 function validateGroups() {
   if (groupNameInput.value) {
     groupNameInput.classList.remove("invalid")
@@ -410,7 +470,12 @@ function validateGroups() {
   return {valid: true}
 }
 
-
+/*
+ * @param {Object} grouping - The grouping object to be shown
+ * @param {HTMLElement} groupingContainer - The grouping container to be shown
+ * @description - Shows the actions modal for a grouping
+ * @returns {undefined} 
+ */
 function showActionsModal(grouping,groupingContainer){
   //shows a modal that has the actions that can be done on a grouping
   createModal("tall", (modal, exit) => {
@@ -495,6 +560,10 @@ function showActionsModal(grouping,groupingContainer){
   })
 }
 
+/*
+ * @param {HTMLElement} student - The student to accept
+ * @description - Opens the accept student modal
+ */
 function openAcceptStudent(student) {
   student.classList.add("selected")
   state.info.student = student
@@ -515,6 +584,11 @@ function openAcceptStudent(student) {
   document.addEventListener("click", closeOutsideClick)
 } 
 
+/*
+ * @param {Event} e
+ * @description - Closes accept student modal if click is outside of modal
+ * @returns {undefined}
+ */
 function closeOutsideClick(e) {
   let close = true
   for (const group of Array.from(groupScatter.children)) {
@@ -533,6 +607,11 @@ function closeOutsideClick(e) {
   }
 }
 
+/*
+ * @param {Event} e
+ * @description Closes - accept student modal
+ * @returns {undefined}
+ */
 function closeAcceptStudent(e) {
   for (const group of Array.from(groupScatter.children)) {
     if (group.id != "add-group") {
@@ -551,11 +630,17 @@ function closeAcceptStudent(e) {
   document.removeEventListener("click", closeOutsideClick)
 }
 
+// Accepts student into group
 function acceptStudent(e) {
   addList(state.info.student, e.currentTarget)
   closeAcceptStudent()
 }
 
+/*
+  * @param {Object} grouping - Grouping object
+  * @description - Shows the actions modal for a grouping
+  * @returns {undefined}
+  */
 function addGroupingToList(grouping) {
   const groupingContainer = document.createElement("div")
   groupingContainer.classList.add("grouping-container")
@@ -587,7 +672,6 @@ function addGroupingToList(grouping) {
   groupingsList.appendChild(groupingContainer)
 } 
 
-
 createGroupBtn.addEventListener("click", () => {editGrouping()})
 
 saveGroupBtn.addEventListener("click", async () => {
@@ -603,6 +687,12 @@ arrangeStudentsBtn.addEventListener("click", showArrangeStudentsModal)
 
 addGroupBtn.addEventListener("click", addGroup)
 
+/*
+  * @param {String} filename - Name of file to be downloaded
+  * @param {String} text - Text to be downloaded
+  * @description - Downloads a CSV file
+  * @returns {undefined}
+  */
 function downloadCSV(filename, text) {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(text));

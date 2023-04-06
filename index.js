@@ -113,6 +113,7 @@ app.get("/login", async (req, res) => {
   }
 })
 
+// sends the correct user data to the script that is loading the form page
 app.get("/formData", async (req, res) => {
   const user = await User.findOne({id: req.query.user}).exec()
   if (user) {
@@ -130,6 +131,7 @@ app.get("/formData", async (req, res) => {
   }
 })
 
+// saves preferences for a student
 app.post("/saveStudentPreferences", async (req, res) => {
   const user = await User.findOne({id: req.body.userId, classes: {$elemMatch: {id: req.body.id}}}).exec()
   if (user) {
@@ -153,6 +155,7 @@ app.post("/saveStudentPreferences", async (req, res) => {
   }
 })
 
+// saves groups within a grouping
 app.post("/saveChart", async (req,res) => {
   const verification = await verifyUser(req.header("token"))
   console.log("verification", verification.status)
@@ -176,6 +179,7 @@ app.post("/saveChart", async (req,res) => {
   }
 })
 
+// adds a new class to the user's list of classes
 app.post("/addClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -295,6 +299,7 @@ app.post("/editClass", async (req, res) => {
   }
 })
 
+// deletes a class from the database
 app.post("/deleteClass", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -309,6 +314,7 @@ app.post("/deleteClass", async (req, res) => {
   }
 })
 
+// generates random groups
 app.post("/randomGroups", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -321,6 +327,7 @@ app.post("/randomGroups", async (req, res) => {
   }
 })
 
+// adds a grouping to the database
 app.post("/addGrouping", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -331,6 +338,7 @@ app.post("/addGrouping", async (req, res) => {
   }
 })
 
+// edits a grouping from the database
 app.post("/editGrouping", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -346,6 +354,7 @@ app.post("/editGrouping", async (req, res) => {
   }
 })
 
+// deletes a grouping from the database
 app.post("/deleteGroup", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -366,6 +375,7 @@ app.post("/deleteGroup", async (req, res) => {
   }
 })
 
+// adds a preference to the database
 app.post("/addPreference", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -380,6 +390,7 @@ app.post("/addPreference", async (req, res) => {
   }
 })
 
+// deletes a preference from the database
 app.post("/deletePreference", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -409,6 +420,7 @@ app.get("/getClasses", async (req, res) => {
   }
 })
 
+// adds middlewear to send user to 404 page on invalid url
 app.use((req, res) => {
   res.sendFile(req.url, sendFileOptions, (e) => {
     if (e) {
@@ -417,14 +429,12 @@ app.use((req, res) => {
   })
 })
 
-app
-
 //Listen
 http.listen(process.env.PORT, function(){
 	console.log(`Server listening on *:${process.env.PORT}`)
 })
 
-
+// verifies the user
 async function verifyUser(token) {
   const ticket = await oAuth2Client.verifyIdToken({
     idToken: token,
@@ -435,7 +445,7 @@ async function verifyUser(token) {
   return {status: true, user: ticket.getPayload()}
 }
 
-
+// makes groups by number of groups specified
 function makeGroupsByNumGroups(students, numGroups) {
   students = [...students]
   let groups = []
@@ -457,6 +467,7 @@ function makeGroupsByNumGroups(students, numGroups) {
   return groups
 }
 
+// makes groups by number of students per group specified
 function makeGroupsByNumStudents(students, numStudents) {
   students = [...students]
   let groups = []

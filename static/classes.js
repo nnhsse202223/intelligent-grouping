@@ -1,3 +1,9 @@
+// Description: This file contains the functions that are used to create and edit classes.
+
+/*
+ * @description - This function creates a new classObj based on the information in the input fields.
+ * @returns {Object} classObj
+ */
 function constructClassFromManual() {
   const classObj = {groupings: []}
 
@@ -8,6 +14,7 @@ function constructClassFromManual() {
   classObj.students = []
   classObj.preferences = []
   
+  // This loop iterates through each student input group and creates a student object for each one.
   for (const inputGroup of Array.from(studentInfoInputs.children)) {
     if (!inputGroup.classList.contains("sizeholder")) {
       const student = {}
@@ -31,6 +38,11 @@ function constructClassFromManual() {
   return classObj
 }
 
+/*
+ * @param file - The file that is being read.
+ * @description - This function reads a CSV file and creates a classObj from it.
+ * @returns {Object} classObj and {Boolean} valid
+ */
 async function constructClassesFromFile(file) {
   let data = await file.text()
   const classObjs = {}
@@ -103,6 +115,10 @@ async function constructClassesFromFile(file) {
   return {valid: true, classObjs: classObjs}
 }
 
+/*
+ * @param classObjs - The classObjs that are being saved.
+ * @description - This function sends a post request to the server to save the new classes.
+ */
 function saveNewClasses(classObjs) {
   return fetch("/addClasses", {
     method: "POST",
@@ -116,6 +132,10 @@ function saveNewClasses(classObjs) {
   }).then(res => res.json())
 }
 
+/*
+ * @param classObj - The classObj that is being saved.
+ * @description - This function sends a post request to the server to save the edited class.
+ */
 function saveEditedClass(classObj) {
   return fetch("/editClass", {
     method: "POST",
@@ -130,6 +150,11 @@ function saveEditedClass(classObj) {
   }).then(res => res.json())
 }
 
+/*
+ * @param classObj - The classObj that is being added to the sidebar.
+ * @description - This function adds a classObj to the sidebar.
+ * @returns {Element} classElement
+ */
 function addClassToUI(classObj) {
   const classElement = document.createElement("div")
   classElement.classList = "class"
@@ -146,6 +171,10 @@ function addClassToUI(classObj) {
   return classElement
 }
 
+/*
+ * @param classElement - The classElement that is being added to the sidebar.
+ * @description - This function adds event listeners to the class elements to update the UI when they are clicked.
+ */
 function setUpClassEvents(classElement) {
   classElement.addEventListener("click", () => {
     for (const element of Array.from(classListDiv.children)) {
@@ -154,11 +183,16 @@ function setUpClassEvents(classElement) {
       } else {
         element.classList.add("selected")
       }
+      // Updates the UI to show the class.
       showClass(classElement.id)
     }
   })
 }
 
+/*
+ * @param id - The id of the class that is being shown.
+ * @description - This function updates the UI to show the class.
+ */
 function showClass(id) {
   switchSection(viewClassSection)
   let selectedClass = classes[id].obj
@@ -177,13 +211,18 @@ function showClass(id) {
   }
 }
 
-
-
+/*
+ * @param classObj - The classObj that is being added to the sidebar.
+ * @description - Adds class to classes array and to the UI.
+ */
 async function addClass(classObj) {
   classes[classObj.id] = {obj: classObj}
   classes[classObj.id].element = addClassToUI(classObj)
 }
 
+/*
+ * @description - Takes the constructed class and creates a new modal for user to select from.
+ */
 async function uploadClass() {
   startLoad()
   if (uploadClassInput.files[0]) {
@@ -221,6 +260,9 @@ async function uploadClass() {
   endLoad()
 }
 
+/*
+ * @description - Shows the modal for adding a class.
+ */
 function showAddClassModal() {
   createModal("small", (modal, exit) => {
     modal.classList.add("add-class-modal")
@@ -246,8 +288,10 @@ function showAddClassModal() {
   })
 }
 
-
-
+/*
+ * @param classObj - The classObj that is being edited.
+ * @description - This function allows the user to edit a class.
+ */
 function editClass(classObj) {
   if (classObj) {
     statusTitle.innerText = "Edit Class"
@@ -273,8 +317,10 @@ function editClass(classObj) {
   switchSection(editClassSection)
 }
 
-
-
+/*
+ * @param student - The student object that is being added to the UI.
+ * @description - This function adds the inputs for a student to the UI.
+ */
 function addStudentInputs(student) {
   const studentInfoContainer = document.createElement("div")
   studentInfoContainer.classList = "student-info-container"
@@ -292,6 +338,10 @@ function addStudentInputs(student) {
   addList(studentInfoContainer, studentInfoInputs)
 }
 
+/*
+ * @description - This function makes sure all the inputs are valid.
+ * @returns - Returns an object with a valid property and an error property if invalid (error property is optional).
+ */
 function validateClassInputs() {
   let status = {valid: true}
   for (const input of Array.from(classInfoInputs.children)) {
@@ -353,6 +403,10 @@ function validateClassInputs() {
   return status
 }
 
+/*
+ * @param id - The id of the class to be deleted.
+ * @description - This function deletes a class from the database.
+ */
 function deleteClassFromDB(id) {
   return fetch("/deleteClass", {
     method: "POST",
@@ -366,6 +420,10 @@ function deleteClassFromDB(id) {
   }).then(res => res.json())
 }
 
+/*
+ * @param id - The id of the class to be deleted.
+ * @description - This function deletes a class from the UI and switches user to the welcome section.
+ */
 async function deleteClass(id) {
   startLoad()
   const deleteResult = await deleteClassFromDB(id)
@@ -380,6 +438,10 @@ async function deleteClass(id) {
   endLoad()
 }
 
+/*
+ * @description - This function exits the edit class section and either shows the class that was being edited
+ *                or switches to the welcome section depending on the state.
+ */
 function exitEditClass() {
   if (state.mode == 3) {
     showClass(state.info.id)
@@ -390,6 +452,9 @@ function exitEditClass() {
   }
 }
 
+/*
+ * @description - This function saves a NEW class to the database.
+ */
 async function completeClassAdd() {
   startLoad()
   const status = validateClassInputs()
@@ -410,6 +475,9 @@ async function completeClassAdd() {
   endLoad()
 }
 
+/*
+ * @description - This function saves an EDITED class to the database.
+ */
 async function completeClassEdit() {
   startLoad()
   const status = validateClassInputs()
@@ -432,6 +500,7 @@ async function completeClassEdit() {
   endLoad()
 }
 
+// Event listeners
 addClassBtn.addEventListener("click", showAddClassModal)
 uploadClassInput.addEventListener("change", uploadClass)
 addStudentBtn.addEventListener("click", addStudentInputs)
@@ -483,12 +552,15 @@ function deleteConfirm(id){
   })
 }
 
+// Edit class event listener
 editClassBtn.addEventListener("click", () => {
   editClass(classes[state.info.id])
 })
 
+// Delete class event listener
 deleteClassBtn.addEventListener("click", () => {
   deleteConfirm(state.info.id)
 })
 
+// Cancel class event listener
 cancelClassBtn.addEventListener("click", exitEditClass)
