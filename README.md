@@ -51,7 +51,7 @@ The Intelligent Grouping web application is a website designed to provide teache
   * On the right section of the view class screen, the view responses button can be found below the student survey information. 
   * Clicking the button opens up the student responses panel, where a student can be selected from a list on the left and their responses will be shown on the right.
   * Students who have not yet responded will be shown in the list on the left, but when clicked will show that there has been no response yet.
-    * It is important to note that a refresh is required to fetch the responses from the server, so until you refresh the page there will be no new responses.
+  * Students preferences will automatically refresh every 10 seconds but you can refresh on demand by clicking the refresh button in the top right-hand corner
 * Instructions for those who wish to use their newly generated preferences.
   * Follow the same steps as the steps for random grouping until you get to the "Choose an Arrangement" prompt.
   * Instead of selecting "random groupings" select "preferences" and fill out the information shown, i.e. either the amount of desired groups or the number of people in each group.
