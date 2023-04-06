@@ -1,5 +1,5 @@
 // stores the id of the current student being viewed
-let currentStudent;
+let currentStudent = -1;
 
 function showResponses() {
     statusTitle.innerText = "Student Responses"
@@ -131,6 +131,9 @@ function findStudentById(id){
 
 // updates classes before running usual updateStudentInformation mathod
 async function reloadPreferencesDisplay(index) {
+  if (currentStudent == -1) {
+    return;
+  }
   //e.stopPropagation()
   let databaseClasses = await fetch("/getClasses", {
     method: "GET",
@@ -155,14 +158,9 @@ async function reloadPreferencesDisplay(index) {
     updateStudentInformation(index)
 }
 
+reloadResponses.addEventListener('click', function() {
+  reloadPreferencesDisplay(currentStudent)
+})
+
 // reloads classes every 10 seconds 
 setInterval(() => {reloadPreferencesDisplay(currentStudent)}, 10000)
-
-/*
-SOULTION TO THE REFRESH PROBLEM \'o'/
-
-setInterval(functionName,howeverManyMillisecondsBetweenFunctionCalls)
-
-funtionName - function that gets form data and puts it into the database and UI
-                    Might need to make a new function for this
-*/
