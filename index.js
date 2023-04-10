@@ -411,6 +411,15 @@ app.post("/deletePreference", async (req, res) => {
   }
 })
 
+app.get("/getClasses", async (req, res) => {
+  const verification = await verifyUser(req.header("token"))
+  if (verification.status) {
+    let user = await User.findOne({id: verification.user.sub}).exec()
+    console.log("\n\nUSER:\n\n"+user)
+    res.json({classes: user.classes})
+  }
+})
+
 // adds middlewear to send user to 404 page on invalid url
 app.use((req, res) => {
   res.sendFile(req.url, sendFileOptions, (e) => {

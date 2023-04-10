@@ -1132,6 +1132,15 @@ h1 {
   font-weight: bold;
 }
 
+#reload-responses {
+  color: black;
+  font-size: 3em;
+  font-weight: bold;
+  position:absolute;
+  top:15;
+  right:15;
+}
+
 #tutorial-sec {
   padding: 25px;
 }
@@ -1153,6 +1162,10 @@ h1 {
 }
 
 #open-tutorial {
+  cursor: pointer;
+}
+
+#reload-responses {
   cursor: pointer;
 }
 
