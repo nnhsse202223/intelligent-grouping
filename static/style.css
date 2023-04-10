@@ -713,7 +713,7 @@ h1 {
   opacity: 1;
   position: absolute;
   visibility: visible !important;
-  top: 0px !important;
+  top: 48px !important;
   right: -300px !important;
   height: 100vh !important;
   width: 100vw !important;
@@ -908,6 +908,16 @@ h1 {
   position: absolute;
   right: 327.5px;
   top: 17.5px;
+  color: var(--dark);
+  border: none;
+}
+
+#close-display {
+  font-size: 3em;
+  display: block;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
   color: var(--dark);
   border: none;
 }
