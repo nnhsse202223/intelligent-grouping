@@ -42,6 +42,10 @@ const reloadResponses = document.getElementById("reload-responses")
 const openTutorial = document.getElementById("open-tutorial")
 const tutorialSection = document.getElementById("tutorial-sec")
 const seatingChartSection = document.getElementById("seating-chart-sec")
+const openDisplayMode = document.getElementById("open-display")
+const displayMode = document.getElementById("display-mode")
+const fullGroupScatter = document.getElementById("fullscreen-group-scatter")
+const closeDisplayMode = document.getElementById("close-display")
 
 const chartGrid = document.getElementById("chart-grid")
 
@@ -51,3 +55,4 @@ const saveChartBtn = document.getElementById('save-chart')
 const resetChartBtn = document.getElementById('reset-chart')
 
 const chartSidebar = document.getElementById("chart-sidebar")
+const mainSidebar = document.getElementById("sidebar")

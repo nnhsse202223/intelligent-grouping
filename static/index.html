@@ -41,13 +41,25 @@
         <i id="open-tutorial" class="fa fa-question-circle"></i>
       </div>
     </div>
-    
+
     <div id="dashboard">
       <img id="app-spinner" src="/images/spinner.svg">
       <div id="welcome-sec" class="section visible">
         <h1 id="welcome">Welcome!</h1>
       </div>
+
+      <div id="display-mode" class="section">
+        
+        <div id="fullscreen-group-scatter" class="section">
+          
+        </div>
+        <button id="close-display" class="group-display persist">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
       
+
       <div id="tutorial-sec" class = "section">
         <div id="tutorial-panel" class = "panel">
           <div class="accordion-container">
@@ -177,6 +189,10 @@
           <div id="add-group" class="group-container persist"><i class="fa fa-plus fa-10x"></i></div>
         </div>
 
+        <button id="open-display" class="group-display persist">
+          <i class="fas fa-expand"></i>
+        </button>
+
         <div id="group-sidebar">
           <div id="group-actions-div">
             <label>
@@ -190,6 +206,8 @@
           <div id="excluded-students-list"></div>
         </div>
       </div>
+
+      <div> </div>
 
       <div id="edit-class-sec" class="section">
         <h1 id="class-info-title" class="large">Class Info</h1>
@@ -227,6 +245,7 @@
           </div>
         </div>
       </div>
+      
       <div id="responses-sec" class="section">
         <select id="student-selector" class="selector" size=18>
         </select>
@@ -242,6 +261,8 @@
     </div>
   </div>
 
+  
+
   <script src="https://apis.google.com/js/platform.js"></script>
   <script src="/md5.js"></script>
   <script src="/gene.js"></script>
@@ -256,5 +277,6 @@
   <script src="/genetesting.js"></script>
   <script src="/chart.js"></script>
   <script src="/responses.js"></script>
+  <script src="/display.js"></script>
   <script> </script>
 </body>
