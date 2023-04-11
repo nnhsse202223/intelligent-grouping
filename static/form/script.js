@@ -99,12 +99,10 @@ function createDynamicSelect(placeholder, options) {
   select.appendChild(placeholderOption)
 
   for (const option of options) {
-    if(option.value != studentIdInput.value) {
-      const selectOption = document.createElement("option")
-      selectOption.innerText = option[0]
-      selectOption.value = option[1]
-      select.appendChild(selectOption)
-    }
+    const selectOption = document.createElement("option")
+    selectOption.innerText = option[0]
+    selectOption.value = option[1]
+    select.appendChild(selectOption)
   }
 
   return select
