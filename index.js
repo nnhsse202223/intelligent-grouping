@@ -75,7 +75,7 @@ const sendFileOptions = {
     dotfiles: 'deny'
 }
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //Routing
 app.get('/', async (req, res) => {
@@ -113,11 +113,13 @@ app.get("/login", async (req, res) => {
   }
 })
 
+// sends the correct user data to the script that is loading the form page
 app.get("/formData", async (req, res) => {
   const user = await User.findOne({id: req.query.user}).exec()
   if (user) {
     const classObj = user.classes.find(c => c.id == req.query.class)
     if (classObj) {
+      //console.log("\nPreferences", classObj.preferences);
       res.json({status: true, preferences: classObj.preferences, className: classObj.name, period: classObj.period, students: classObj.students.map(s => (
         {name: `${s.first} ${s.middle ? `${s.middle}. ` : ""}${s.last}`, id: md5(s.id)}
       ))})
@@ -129,6 +131,7 @@ app.get("/formData", async (req, res) => {
   }
 })
 
+// saves preferences for a student
 app.post("/saveStudentPreferences", async (req, res) => {
   const user = await User.findOne({id: req.body.userId, classes: {$elemMatch: {id: req.body.id}}}).exec()
   if (user) {
@@ -137,6 +140,7 @@ app.post("/saveStudentPreferences", async (req, res) => {
     if (student) {
       for (const preference of req.body.preferences) {
         if (["studentLike", "studentDislike"].includes(preference.type)) {
+          //explanation of next line: for each id in the preference, find the student with that id and replace it with the md5 hash of the student's id
           preference.inputs = preference.inputs.map(id => classObj.students.find(s => id == md5(s.id)).id)
         }
         student.preferences[preference.type] = preference
@@ -151,6 +155,7 @@ app.post("/saveStudentPreferences", async (req, res) => {
   }
 })
 
+// saves groups within a grouping
 app.post("/saveChart", async (req,res) => {
   const verification = await verifyUser(req.header("token"))
   console.log("verification", verification.status)
@@ -174,6 +179,7 @@ app.post("/saveChart", async (req,res) => {
   }
 })
 
+// adds a new class to the user's list of classes
 app.post("/addClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -200,6 +206,87 @@ app.post("/editClass", async (req, res) => {
     const user = await User.findOne({id: verification.user.sub, classes: {$elemMatch: {id: req.body.oldId}}}).exec()
     if (user) {
       const existingClassObj = user.classes.find(c => c.id == req.body.oldId)
+      //saves student preferences and ids in an array
+      const studentPreferences = []
+      for (const student of existingClassObj.students) {
+        studentPreferences.push({id: student.id, preferences: student.preferences})
+      }
+
+      // checks if student preferences are valid (aka exist)
+      for(let i=0; i<studentPreferences.length; i++){
+         // gets the specific preferences object from the studentPreferences array
+         let preferences = studentPreferences[i].preferences
+          // checks if the studentLike array is not empty
+          if(preferences.studentLike.length>0) {
+          let valid = false;
+          // keeps track of the index of the id in the array
+          let num = 0;
+          // loops through the studentLike[0].inputs array
+          for(const id of preferences.studentLike[0].inputs) {
+            // sets the valid variable to false by default
+            valid = false;
+            // checks if the id exists in the array of students
+            if(classObj.students.find(s => s.id == id))
+            {
+              // if the id exists, it is valid
+              valid = true;
+            }
+            // if the id does not exist, it is removed from the array
+            if(valid==false){
+              // removes the id from the array
+              preferences.studentLike[0].inputs.splice(num,1) 
+              // checks if the array is empty
+              if(preferences.studentLike[0].inputs.length<=0) {
+                // sets the studentLike array to an empty array
+                preferences.studentLike = [];
+                break;
+              }
+              // decrements the index of the array to account for the removed id
+              num--;
+            }
+            // increments the index of the array to check the next id
+            num++;
+          }
+        }
+        // checks if the studentDislike array is not empty
+        if(preferences.studentDislike.length>0) {
+          let valid = false;
+          let num = 0;
+          // loops through the studentDislike[0].inputs array
+          for(const id of preferences.studentDislike[0].inputs) {
+            valid = false;
+            if(classObj.students.find(s => s.id == id))
+            {
+              valid = true;
+            }
+            if(valid==false){
+              preferences.studentDislike[0].inputs.splice(num,1) 
+              if(preferences.studentDislike[0].inputs.length<=0) {
+                preferences.studentDislike = [];
+                break;
+              }
+              num--;
+            }
+            num++;
+          }
+        }
+      }
+
+
+      //transfers student preferences to new class
+      for(const student of classObj.students){
+        for(const preference of studentPreferences){
+          if(student.id==preference.id){
+            student.preferences = preference.preferences
+            // console.log("Students Name\n"+ student.name)
+            // console.log("Student Preferences\n"+ student.preferences)
+            // console.log("Student ID\n"+ student.id)
+            // console.log("Student Inputs\n"+ student.preferences.studentLike[0].inputs)
+          }
+        }
+      }
+
+
       existingClassObj.id = classObj.id
       existingClassObj.name = classObj.name
       existingClassObj.period = classObj.period
@@ -212,6 +299,7 @@ app.post("/editClass", async (req, res) => {
   }
 })
 
+// deletes a class from the database
 app.post("/deleteClass", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -226,6 +314,7 @@ app.post("/deleteClass", async (req, res) => {
   }
 })
 
+// generates random groups
 app.post("/randomGroups", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -238,6 +327,7 @@ app.post("/randomGroups", async (req, res) => {
   }
 })
 
+// adds a grouping to the database
 app.post("/addGrouping", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -248,6 +338,7 @@ app.post("/addGrouping", async (req, res) => {
   }
 })
 
+// edits a grouping from the database
 app.post("/editGrouping", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -263,6 +354,7 @@ app.post("/editGrouping", async (req, res) => {
   }
 })
 
+// deletes a grouping from the database
 app.post("/deleteGroup", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -283,6 +375,7 @@ app.post("/deleteGroup", async (req, res) => {
   }
 })
 
+// adds a preference to the database
 app.post("/addPreference", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -297,6 +390,7 @@ app.post("/addPreference", async (req, res) => {
   }
 })
 
+// deletes a preference from the database
 app.post("/deletePreference", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
@@ -317,6 +411,16 @@ app.post("/deletePreference", async (req, res) => {
   }
 })
 
+app.get("/getClasses", async (req, res) => {
+  const verification = await verifyUser(req.header("token"))
+  if (verification.status) {
+    let user = await User.findOne({id: verification.user.sub}).exec()
+    console.log("\n\nUSER:\n\n"+user)
+    res.json({classes: user.classes})
+  }
+})
+
+// adds middlewear to send user to 404 page on invalid url
 app.use((req, res) => {
   res.sendFile(req.url, sendFileOptions, (e) => {
     if (e) {
@@ -325,14 +429,12 @@ app.use((req, res) => {
   })
 })
 
-app
-
 //Listen
 http.listen(process.env.PORT, function(){
 	console.log(`Server listening on *:${process.env.PORT}`)
 })
 
-
+// verifies the user
 async function verifyUser(token) {
   const ticket = await oAuth2Client.verifyIdToken({
     idToken: token,
@@ -343,7 +445,7 @@ async function verifyUser(token) {
   return {status: true, user: ticket.getPayload()}
 }
 
-
+// makes groups by number of groups specified
 function makeGroupsByNumGroups(students, numGroups) {
   students = [...students]
   let groups = []
@@ -365,6 +467,7 @@ function makeGroupsByNumGroups(students, numGroups) {
   return groups
 }
 
+// makes groups by number of students per group specified
 function makeGroupsByNumStudents(students, numStudents) {
   students = [...students]
   let groups = []

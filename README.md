@@ -1,5 +1,6 @@
 # Intelligent-Grouping-App
 ![Intelligent Grouping Logo](/static/images/blue-bg.svg)
+
 ## Overview:
 The Intelligent Grouping web application is a website designed to provide teachers with the tools to group their students together for various classroom purposes, with a high degree of customizability and ease-of-use.
 ## Features:
@@ -11,6 +12,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Input user preferences through automatically generated forms for viewing and group creation
 * Easy-to-find tutorial in the top right corner of all screens, accessible by a single click
 * Organize groups on a grid for seating charts
+* Fullscreen mode to view all groupings in a class
 ## Instructions:
 * After the website finishes loading, simply press the "Sign in with Google" button and sign in using whatever email you wish, keeping in mind that that email is your account for this website.
   * Currently only naperville203.org organization emails are permitted
@@ -50,7 +52,7 @@ The Intelligent Grouping web application is a website designed to provide teache
   * On the right section of the view class screen, the view responses button can be found below the student survey information. 
   * Clicking the button opens up the student responses panel, where a student can be selected from a list on the left and their responses will be shown on the right.
   * Students who have not yet responded will be shown in the list on the left, but when clicked will show that there has been no response yet.
-    * It is important to note that a refresh is required to fetch the responses from the server, so until you refresh the page there will be no new responses.
+  * Students preferences will automatically refresh every 10 seconds but you can refresh on demand by clicking the refresh button in the top right-hand corner
 * Instructions for those who wish to use their newly generated preferences.
   * Follow the same steps as the steps for random grouping until you get to the "Choose an Arrangement" prompt.
   * Instead of selecting "random groupings" select "preferences" and fill out the information shown, i.e. either the amount of desired groups or the number of people in each group.
@@ -61,6 +63,25 @@ The Intelligent Grouping web application is a website designed to provide teache
   * The arrow button in the top right opens and closes the sidebar containing all groups not on the seating chart currently
   * In the sidebar, the trash can button clears all groups from the seating chart (but does not save the clear)
   * The floppy disk icon is the save button, and a loading bar at the top of the screen shows the progress of the save.
+* Instructions for the fullscreen mode
+  * From the view class screen, click the "Create Grouping" button
+  * On the create grouping page, select the fullscreen icon
+
+## Exporting A CSV File From Infinite Campus
+* First open up campus tools on Infininte Campus:
+
+![step1](/static/images/step1.png)
+
+* Then go to Ad Hoc Reporting > Data Export:
+
+![step2](/static/images/step2.png)
+
+* Click “student emails”, “Delimited Values (CSV)”, and additional options:
+
+![step3](/static/images/step3.png)
+
+* Then press "Export" to download the CSV file to your computer
+
 ## Internal Configuration (gene.js):
 * In the aformentioned file, there are options provided to allow for adjustment of the genetic algorithm for tuning purposes.
   * Quarter Size: 
