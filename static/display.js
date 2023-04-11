@@ -6,3 +6,8 @@ openDisplayMode.addEventListener("click", () => {
     showFullscreen(fullGroupScatter)
     switchSection(displayMode)
 })
+
+closeDisplayMode.addEventListener("click", () => {
+    hideFullscreen(fullGroupScatter)
+    switchSection(editGroupSection)
+})
