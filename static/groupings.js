@@ -460,7 +460,7 @@ function validateGroups() {
 
   if (classes[state.info.id].obj.groupings.map(group => group.name).includes(groupNameInput.value)) {
     groupNameInput.classList.add("invalid")
-    return {valid: false, error: "Duplicate Grouping Name"}
+    return {valid: false, error: "Duplicate Grouping Name In Class"}
   }
 
   if (Array.from(groupScatter.children).length == 1) {
