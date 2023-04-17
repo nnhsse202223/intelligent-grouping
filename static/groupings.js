@@ -458,7 +458,7 @@ function validateGroups() {
     return {valid: false, error: "Please fill out all fields"}
   }
 
-  if (Object.values(classes).map(c => c.obj.groupings).flat().map(grouping => grouping.name).includes(groupNameInput.value)) {
+  if (classes[state.info.id].obj.groupings.map(group => group.name).includes(groupNameInput.value)) {
     groupNameInput.classList.add("invalid")
     return {valid: false, error: "Duplicate Grouping Name"}
   }
