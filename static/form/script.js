@@ -137,6 +137,15 @@ function validateForm(data) {
     return {status: false, error: "Please fill out all fields."}
   }
 
+  for (const preference of data.preferences) {
+    for (const input of preference.inputs) {
+      if (input.value == (md5(studentIdInput.value))) {
+        studentIdInput.classList.add("invalid")
+        return {status: false, error: "Cannot pick yourself as a preference."}
+      }
+    }
+  }
+
   return {status: true}
 }
 
