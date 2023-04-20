@@ -146,6 +146,25 @@ function validateForm(data) {
     }
   }
 
+  // for(const preference of data.preferences) {
+  //   let count = 0
+  //   for (const input of preference.inputs) {
+  //     for (const input2 of preference.inputs) {
+  //       console.log(input.value)
+  //       console.log(input2.value)
+  //       //console.log(input)
+  //       //console.log(input2)
+  //       if (count = 0) {
+  //           count = 1
+  //       }
+  //       else if (input.value == input2.value && count != 0) {
+  //         input.classList.add("invalid")
+  //         return {status: false, error: "Cannot select same preference twice."}
+  //       }
+  //     }
+  //   }
+  // }
+
   return {status: true}
 }
 
