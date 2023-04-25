@@ -161,10 +161,6 @@ function validateForm(data) {
     for(const preference of data.preferences) {
       for (const input of preference.inputs) {
         for (const input2 of preference.inputs) {
-          console.log(input.value)
-          console.log(input2.value)
-          //console.log(input)
-          //console.log(input2)
           if (input.value == input2.value && input != input2) {
             input.classList.add("invalid")
             return {status: false, error: "Cannot select same preference twice."}
