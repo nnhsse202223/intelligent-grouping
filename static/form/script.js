@@ -96,7 +96,12 @@ function createDynamicSelect(placeholder, options) {
   placeholderOption.value = ""
   placeholderOption.innerText = placeholder
 
+  const noPreferenceOption = document.createElement("option")
+  noPreferenceOption.value = ""
+  noPreferenceOption.innerText = "No Preference"
+
   select.appendChild(placeholderOption)
+  select.appendChild(noPreferenceOption)
 
   for (const option of options) {
     const selectOption = document.createElement("option")
