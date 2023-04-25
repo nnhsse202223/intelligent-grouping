@@ -137,6 +137,39 @@ function validateForm(data) {
     return {status: false, error: "Please fill out all fields."}
   }
 
+  /*
+    used to count number of options avaliable to select from (used for picking yourself and picking the same
+          preference twice validation checks to prevent possible errors)
+  */ 
+  let num = 0
+  for (const student of data.students) {
+    num += 1
+  }
+
+  if(num != 1) {
+    for (const preference of data.preferences) {
+      for (const input of preference.inputs) {
+        if (input.value == (md5(studentIdInput.value))) {
+          studentIdInput.classList.add("invalid")
+          return {status: false, error: "Cannot pick yourself as a preference."}
+        }
+      }
+    }
+  }
+  
+  if(num != 1) {
+    for(const preference of data.preferences) {
+      for (const input of preference.inputs) {
+        for (const input2 of preference.inputs) {
+          if (input.value == input2.value && input != input2) {
+            input.classList.add("invalid")
+            return {status: false, error: "Cannot select same preference twice."}
+          }
+        }
+      }
+    }
+  }
+
   return {status: true}
 }
 
