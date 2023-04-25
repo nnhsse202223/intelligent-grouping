@@ -137,7 +137,10 @@ function validateForm(data) {
     return {status: false, error: "Please fill out all fields."}
   }
 
-  // used to count number of options avaliable to select from
+  /*
+    used to count number of options avaliable to select from (used for picking yourself and picking the same
+          preference twice validation checks to prevent possible errors)
+  */ 
   let num = 0
   for (const student of data.students) {
     num += 1
