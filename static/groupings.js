@@ -321,6 +321,10 @@ function showArrangeStudentsModal() {
         studentNumForm.appendChild(studentNum)
         studentNumForm.innerHTML += "<p>students</p>"
 
+        const check = document.createElement("input")
+        check.type = "checkbox"
+        check.id = "check"
+
         const submit = document.createElement("button")
         submit.classList = "button"
         submit.innerText = "Submit"
@@ -350,6 +354,7 @@ function showArrangeStudentsModal() {
         m.appendChild(groupNumForm)
         m.appendChild(or)
         m.appendChild(studentNumForm)
+        m.appendChild(check)
         m.appendChild(submit)
         
         document.addEventListener("input", singleInput)

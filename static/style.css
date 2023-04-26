@@ -860,6 +860,12 @@ h1 {
   opacity: 1;
 }
 
+#check {
+  transform: scale(1.5);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .student-name-container {
   font-size: 1.8em;
   background-color: var(--light-bg-alt);
