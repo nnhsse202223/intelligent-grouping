@@ -57,6 +57,10 @@ async function completeGroupAdd() {
       classes[state.info.id].obj.groupings.push(grouping)
       showClass(state.info.id)
       setState(4, {id: state.info.id})
+      //if they decide to sort based on avoiding students sitting with people theyve sat with before
+      if(check.checked){
+        
+      }
     }
   } else {
     createError(validateResult.error)
@@ -347,6 +351,8 @@ function showArrangeStudentsModal() {
           const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false)
           setGroups(groupsResult)
           document.removeEventListener("input", singleInput)
+          console.log(groupsResult)
+          console.log(classes)
           e()
           endLoad()
         })
