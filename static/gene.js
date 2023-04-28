@@ -42,7 +42,7 @@ groupSizer: Integer property that has two meanings depending on the boolean belo
 amountOrSize: boolean that determines whether groupSizer refers to the amount of desired groups or the desired size per group
 return: [[]] of student ids
 */
-function startGenetic(students, preferences, groupSizer, amountOrSize)
+function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGroups)
 {
   //derive constants
   const HALF_SIZE = 2 * QUARTER_SIZE //half of a generation size
@@ -195,10 +195,12 @@ function score(grouping, preferences)
     //check whether a given preference is going to be checked or not for this student
     let checkLike = [] //array of length student.preferences.studentLike.length that tells the program whether to check a given studentLike preference or not based on value and position
     let checkDislike = [] //array of length student.preferences.studentDislike.length that tells the program whether to check a given studentDislike preference or not based on value and position
+    let previouslyWith = [] //array of length student.preferences.previouslyWith.length that tells the program whether to check a given studentLike preference or not based on value and position
     
     //populate arrays
     for(let sl of student.preferences.studentLike) checkLike.push((preferences.map(pref => pref.id)).includes(sl.id))
     for(let sd of student.preferences.studentDislike) checkDislike.push((preferences.map(pref => pref.id)).includes(sd.id))
+    for(let pw of student.preferences.previouslyWith) previouslyWith.push((preferences.map(pref => pref.id)).includes(pw.id))
 
     //loop through all other students within the group other than the student currently being analyzed
     for(let studentCheck of group) { if(studentCheck.id != student.id) 
@@ -219,6 +221,10 @@ function score(grouping, preferences)
       //loop through all studentDislike objects and run the code within if it is confirmed that it will be checked for this genetic algorithm
       if(!found) {for(let i = 0; i < student.preferences.studentDislike.length; i++) {if(checkDislike[i])
         {score = adjustScore(score, student.preferences.studentDislike[i].inputs, studentCheck.id, STUDENT_DISLIKE_BASE, false)}}}
+
+      //loop through all previouslyWith objects and run the code within if it is confirmed that it will be checked for this genetic algorithm
+      if(usePastGroups) {for(let i = 0; i < student.preferences.previouslyWith.length; i++) {if(previouslyWith[i])
+        {score = adjustScore(score, student.preferences.previouslyWith[i].inputs, studentCheck.id, STUDENT_DISLIKE_BASE, true)}}}
     }}
   }}
 

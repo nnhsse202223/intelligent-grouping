@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema({
           preferences: {
             studentLike: [],
             studentDislike: [],
+            previouslyWith: [],
             topicLike: [],
             topicDislike: [],
           }

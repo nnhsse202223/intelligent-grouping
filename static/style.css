@@ -856,15 +856,21 @@ h1 {
   width: 80%;
 }
 
-.random-options-modal > form:valid, .random-options-modal > form:hover, .random-options-modal > form:focus {
+.random-options-modal > form:valid > input[type="textbox"], .random-options-modal > form:hover, .random-options-modal > form:focus {
   opacity: 1;
 }
 
-#check {
+
+
+/* #check {
   transform: scale(1.5);
-  color: var(--accent);
-  border-color: var(--accent);
+  cursor: pointer;
+  outline: 1px solid #3d3d3d;
 }
+
+#check:hover {
+  outline: 1px solid #30a2ff;
+} */
 
 .student-name-container {
   font-size: 1.8em;

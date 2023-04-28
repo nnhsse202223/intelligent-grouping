@@ -59,7 +59,9 @@ async function completeGroupAdd() {
       setState(4, {id: state.info.id})
       //if they decide to sort based on avoiding students sitting with people theyve sat with before
       if(check.checked){
-        
+        console.log("checked")
+      } else {
+        console.log("not checked")
       }
     }
   } else {
@@ -325,9 +327,13 @@ function showArrangeStudentsModal() {
         studentNumForm.appendChild(studentNum)
         studentNumForm.innerHTML += "<p>students</p>"
 
+        const checkContainer = document.createElement("form")
+        checkContainer.innerHTML += "<p>Avoid repeat pairings</p>"
         const check = document.createElement("input")
         check.type = "checkbox"
         check.id = "check"
+        checkContainer.appendChild(check)
+        
 
         const submit = document.createElement("button")
         submit.classList = "button"
@@ -348,11 +354,16 @@ function showArrangeStudentsModal() {
           let sNum = document.getElementById("student-num-input")
           const includedStudents = classes[state.info.id].obj.students.filter(student => !Array.from(excludedStudentsListDiv.children).map(e => e.id).includes(student.id))
 
-          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false)
+          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, check.checked)
           setGroups(groupsResult)
           document.removeEventListener("input", singleInput)
           console.log(groupsResult)
           console.log(classes)
+          // if(check.checked){
+          //   console.log("checked")
+          // } else {
+          //   console.log("not checked")
+          // }
           e()
           endLoad()
         })
@@ -360,7 +371,7 @@ function showArrangeStudentsModal() {
         m.appendChild(groupNumForm)
         m.appendChild(or)
         m.appendChild(studentNumForm)
-        m.appendChild(check)
+        m.appendChild(checkContainer)
         m.appendChild(submit)
         
         document.addEventListener("input", singleInput)
