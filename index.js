@@ -341,13 +341,13 @@ app.post("/addGrouping", async (req, res) => {
       for(studentID of group.ids) {
         // gets index of student
         index = classObj.students.findIndex(s => s.id == studentID)
-        // adds all other students in the group to the previouslyWith array if they are not already in it
+        // adds all other students in the group to the previouslyWith array if they are not already in it                                                        //remove this to increase negative weight of repeats the more they happen\\
         classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
       }
     }
 
-    
-
+    console.log("\n\n\nADD USER: \n\n\n")
+    console.log(classObj.students[0].preferences.previouslyWith)
     user.save()
     res.json({status: true})
   }
@@ -375,11 +375,23 @@ app.post("/editGrouping", async (req, res) => {
         classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
       }
     }
-    console.log("\n\n\nUSER: \n\n\n")
+    console.log("\n\n\nEDIT USER: \n\n\n")
     console.log(classObj.students[0].preferences.previouslyWith)
     user.save()
     res.json({status: true})
-    
+  }
+})
+
+app.post("/clearPreviouslyWith", async (req, res) => {
+  const verification = await verifyUser(req.header("token"))
+  if (verification.status) {
+    const user = await User.findOne({id: verification.user.sub}).exec()
+    classObj = user.classes.find(c => c.id == req.body.id)
+    for(student of classObj.students) {
+      student.preferences.previouslyWith = []
+    }
+    user.save()
+    res.json({status: true})
   }
 })
 

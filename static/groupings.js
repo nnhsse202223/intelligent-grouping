@@ -57,12 +57,6 @@ async function completeGroupAdd() {
       classes[state.info.id].obj.groupings.push(grouping)
       showClass(state.info.id)
       setState(4, {id: state.info.id})
-      //if they decide to sort based on avoiding students sitting with people theyve sat with before
-      if(check.checked){
-        console.log("checked")
-      } else {
-        console.log("not checked")
-      }
     }
   } else {
     createError(validateResult.error)
@@ -329,10 +323,10 @@ function showArrangeStudentsModal() {
 
         const checkContainer = document.createElement("form")
         checkContainer.innerHTML += "<p>Avoid repeat pairings</p>"
-        const check = document.createElement("input")
-        check.type = "checkbox"
-        check.id = "check"
-        checkContainer.appendChild(check)
+        const usePreviousGroups = document.createElement("input")
+        usePreviousGroups.type = "checkbox"
+        usePreviousGroups.id = "repeat-groups-check"
+        checkContainer.appendChild(usePreviousGroups)
         
 
         const submit = document.createElement("button")
@@ -354,41 +348,45 @@ function showArrangeStudentsModal() {
           let sNum = document.getElementById("student-num-input")
           const includedStudents = classes[state.info.id].obj.students.filter(student => !Array.from(excludedStudentsListDiv.children).map(e => e.id).includes(student.id))
 
-          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, check.checked)
+          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, usePreviousGroups.checked)
           setGroups(groupsResult)
           document.removeEventListener("input", singleInput)
-          // console.log(groupsResult)
-          // console.log(classes)
-          // if(check.checked){
-          //   console.log("checked")
-          // } else {
-          //   console.log("not checked")
-          // }
           e()
           endLoad()
         })
 
-        const test = document.createElement("button")
-        test.classList = "button"
-        test.innerText = "Test"
+        const resetHistory = document.createElement("button")
+        resetHistory.classList = "button"
+        resetHistory.innerText = "Reset Partner History"
 
-        test.addEventListener("click", async () => {
-          startLoad()
-          let gNum = document.getElementById("group-num-input")
-          let sNum = document.getElementById("student-num-input")
-          const groupsResult = startGenetic(classes[state.info.id].obj.students, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, check.checked)
-          console.log("Groups Result:")
-          console.log(groupsResult)
-          console.log("Groups From UI:")
-          console.log(constructGroupingFromUI())
+        resetHistory.addEventListener("click", async () => {
+          return fetch("/clearPreviouslyWith", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token: auth2.currentUser.get().getAuthResponse().id_token
+            },
+            body: JSON.stringify({
+              id: state.info.id
+            })
+          })
         })
+
+        checkContainer.appendChild(resetHistory)
+
+        const seperator = document.createElement("hr")
+        seperator.classList = "seperator"
+
+        const seperator2 = document.createElement("hr")
+        seperator2.classList = "seperator"
 
         m.appendChild(groupNumForm)
         m.appendChild(or)
         m.appendChild(studentNumForm)
+        m.appendChild(seperator)
         m.appendChild(checkContainer)
+        m.appendChild(seperator2)
         m.appendChild(submit)
-        m.appendChild(test)
         
         document.addEventListener("input", singleInput)
       })

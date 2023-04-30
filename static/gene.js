@@ -10,6 +10,7 @@ const MUTATION_PROPORTION = 0.1 //the proportion of any given mutated member of 
 const STUDENT_LIKE_BASE = 2 //exponential base for the increment when a student is paired with a preferred student
 const STUDENT_DISLIKE_BASE = 3 //exponential base for the decrement when a student is paired with an unpreferred student
 const PREVIOUSLY_WITH_BASE = 3 //exponential base for the decrement when a student is paired with a student they have been paired with before
+const PREVIOUSLY_WITH_EXP = 3 //exponential exponent for the decrement when a student is paired with a student they have been paired with before
 //data structure:
 /*
 generation = [member]
@@ -196,7 +197,17 @@ function score(grouping, preferences, usePastGroups)
     for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, searchList.length - i)}}
     return current
   }
-  x=0
+
+  //same as above function but does not give more weight to earlier values in the array
+  /*
+  exp: Integer exponent for the incrementation to the score
+  */
+  const adjustScoreNoRanking = function(current, searchList, searchValue, expBase, exp, isAdditive)
+  {
+    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, exp)}}
+    return current
+  }
+
   //loop through all students in array
   for(let group of grouping) {for(let student of group) 
   {
@@ -231,7 +242,8 @@ function score(grouping, preferences, usePastGroups)
         {score = adjustScore(score, student.preferences.studentDislike[i].inputs, studentCheck.id, STUDENT_DISLIKE_BASE, false)}}}      
 
       //check whether the student has been in a group with the student being checked before if the usePastGroups parameter is true
-      if(usePastGroups) {score=adjustScore(score, student.preferences.previouslyWith, studentCheck.id, PREVIOUSLY_WITH_BASE, false)}
+      //uses adjustScoreNoRanking() because the order of the past partners does not matter as of now
+      if(usePastGroups) {score=adjustScoreNoRanking(score, student.preferences.previouslyWith, studentCheck.id, PREVIOUSLY_WITH_BASE, PREVIOUSLY_WITH_EXP, false)}
     }}
   }}
 
