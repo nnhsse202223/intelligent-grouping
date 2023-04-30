@@ -647,7 +647,7 @@ function addGroupingToList(grouping) {
   groupingContainer.id = grouping.id
 
   const groupingName = document.createElement("p")
-  groupingName.innerText = `${grouping.name} (${grouping.groups.length} group(s))`
+  groupingName.innerText = `${grouping.name} (${grouping.groups.length})`
 
   const menuIcon = document.createElement("i")
   menuIcon.id = "menu-icon"
