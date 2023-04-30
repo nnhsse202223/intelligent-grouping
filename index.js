@@ -333,7 +333,21 @@ app.post("/addGrouping", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     const user = await User.findOne({id: verification.user.sub}).exec()
-    user.classes.find(c => c.id == req.body.id).groupings.push(req.body.grouping)
+    classObj = user.classes.find(c => c.id == req.body.id)
+    classObj.groupings.push(req.body.grouping)
+    
+    //updates previouslywith
+    for(group of req.body.grouping.groups) {
+      for(studentID of group.ids) {
+        // gets index of student
+        index = classObj.students.findIndex(s => s.id == studentID)
+        // adds all other students in the group to the previouslyWith array if they are not already in it
+        classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
+      }
+    }
+
+    
+
     user.save()
     res.json({status: true})
   }
@@ -341,17 +355,31 @@ app.post("/addGrouping", async (req, res) => {
 
 // edits a grouping from the database
 app.post("/editGrouping", async (req, res) => {
+  console.log("started")
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     
     const user = await User.findOne({id: verification.user.sub}).exec()
-    const groupings = user.classes.find(c => c.id == req.body.id).groupings
+    classObj = user.classes.find(c => c.id == req.body.id)
+    const groupings = classObj.groupings
     groupings.splice(groupings.indexOf(groupings.find(g => g.id == req.body.oldId)), 1)
     
-    user.classes.find(c => c.id == req.body.id).groupings.push(req.body.grouping)
-    
+    classObj.groupings.push(req.body.grouping)
+
+    //updates previouslywith
+    for(group of req.body.grouping.groups) {
+      for(studentID of group.ids) {
+        // gets index of student
+        index = classObj.students.findIndex(s => s.id == studentID)
+        // adds all other students in the group to the previouslyWith array if they are not already in it
+        classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
+      }
+    }
+    console.log("\n\n\nUSER: \n\n\n")
+    console.log(classObj.students[0].preferences.previouslyWith)
     user.save()
     res.json({status: true})
+    
   }
 })
 
@@ -416,7 +444,7 @@ app.get("/getClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     let user = await User.findOne({id: verification.user.sub}).exec()
-    console.log("\n\nUSER:\n\n"+user)
+    //console.log("\n\nUSER:\n\n"+user)
     res.json({classes: user.classes})
   }
 })

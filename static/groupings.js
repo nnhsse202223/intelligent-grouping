@@ -357,8 +357,8 @@ function showArrangeStudentsModal() {
           const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, check.checked)
           setGroups(groupsResult)
           document.removeEventListener("input", singleInput)
-          console.log(groupsResult)
-          console.log(classes)
+          // console.log(groupsResult)
+          // console.log(classes)
           // if(check.checked){
           //   console.log("checked")
           // } else {
@@ -368,11 +368,27 @@ function showArrangeStudentsModal() {
           endLoad()
         })
 
+        const test = document.createElement("button")
+        test.classList = "button"
+        test.innerText = "Test"
+
+        test.addEventListener("click", async () => {
+          startLoad()
+          let gNum = document.getElementById("group-num-input")
+          let sNum = document.getElementById("student-num-input")
+          const groupsResult = startGenetic(classes[state.info.id].obj.students, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, check.checked)
+          console.log("Groups Result:")
+          console.log(groupsResult)
+          console.log("Groups From UI:")
+          console.log(constructGroupingFromUI())
+        })
+
         m.appendChild(groupNumForm)
         m.appendChild(or)
         m.appendChild(studentNumForm)
         m.appendChild(checkContainer)
         m.appendChild(submit)
+        m.appendChild(test)
         
         document.addEventListener("input", singleInput)
       })

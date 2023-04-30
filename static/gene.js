@@ -9,6 +9,7 @@ const MUTATION_PROBABILITY = 0.1 //the probability of any given member of a gene
 const MUTATION_PROPORTION = 0.1 //the proportion of any given mutated member of a generation to be modified
 const STUDENT_LIKE_BASE = 2 //exponential base for the increment when a student is paired with a preferred student
 const STUDENT_DISLIKE_BASE = 3 //exponential base for the decrement when a student is paired with an unpreferred student
+const PREVIOUSLY_WITH_BASE = 3 //exponential base for the decrement when a student is paired with a student they have been paired with before
 //data structure:
 /*
 generation = [member]
@@ -24,6 +25,7 @@ student =
   {
     studentLike = [preference]
     studentDislike = [preference]
+    previouslyWith = [preference]
   }
 }
 preference = 
@@ -44,6 +46,12 @@ return: [[]] of student ids
 */
 function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGroups)
 {
+  console.log("STUDENTS:")
+  console.log(students)
+  console.log("PREFERENCES:")
+  console.log(preferences)
+  console.log("USE PAST GROUPS:")
+  console.log(usePastGroups)
   //derive constants
   const HALF_SIZE = 2 * QUARTER_SIZE //half of a generation size
   const SIZE = 2 * HALF_SIZE  //a full generation size
@@ -59,7 +67,7 @@ function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGr
   for(i = 0; i < SIZE; i++) {currentGeneration[i] = {g: randomize(students, groupSizer, amountOrSize), s: 0}}
 
   //score and sort initial population in descending order by score
-  currentGeneration = scoreAndSort(currentGeneration, preferences)
+  currentGeneration = scoreAndSort(currentGeneration, preferences, usePastGroups)
   
   //since this is the first generation, bestGeneration and bestScore are both initially the only data point given. grab values
   bestGeneration = [...currentGeneration]
@@ -105,7 +113,7 @@ function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGr
     for(let member of currentGeneration) if(Math.random() <= MUTATION_PROBABILITY) member = {g: mutate(member.g), s: 0}
     
     //score and sort generation
-    currentGeneration = scoreAndSort(currentGeneration, preferences)
+    currentGeneration = scoreAndSort(currentGeneration, preferences, usePastGroups)
 
     //if improvmement is made, set failure index to 0 if past the amount of free iterations, and set bestGeneration and bestScore to a copy of the current generation and the score of the best member of the current generation, respectively
     if(currentGeneration[0].s > bestScore)
@@ -168,7 +176,7 @@ grouping: [[{id: String, preferences: {studentLike: [{id: String, inputs: [Strin
 preferences: [{id: String}] list of preference objects to confirm that they are being used for this scoring algorithm
 returns, Integer score gained by this group
 */
-function score(grouping, preferences)
+function score(grouping, preferences, usePastGroups)
 {
   //declare output
   let score = 0
@@ -188,19 +196,19 @@ function score(grouping, preferences)
     for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, searchList.length - i)}}
     return current
   }
-  
+  x=0
   //loop through all students in array
   for(let group of grouping) {for(let student of group) 
   {
     //check whether a given preference is going to be checked or not for this student
     let checkLike = [] //array of length student.preferences.studentLike.length that tells the program whether to check a given studentLike preference or not based on value and position
     let checkDislike = [] //array of length student.preferences.studentDislike.length that tells the program whether to check a given studentDislike preference or not based on value and position
-    let previouslyWith = [] //array of length student.preferences.previouslyWith.length that tells the program whether to check a given studentLike preference or not based on value and position
     
     //populate arrays
+    //loop through all preferences and check whether they are in the class preferences list
+    //if they are, add true to the checkLike, checkDislike array, depending on whether they are in the like or dislike list
     for(let sl of student.preferences.studentLike) checkLike.push((preferences.map(pref => pref.id)).includes(sl.id))
     for(let sd of student.preferences.studentDislike) checkDislike.push((preferences.map(pref => pref.id)).includes(sd.id))
-    for(let pw of student.preferences.previouslyWith) previouslyWith.push((preferences.map(pref => pref.id)).includes(pw.id))
 
     //loop through all other students within the group other than the student currently being analyzed
     for(let studentCheck of group) { if(studentCheck.id != student.id) 
@@ -220,11 +228,10 @@ function score(grouping, preferences)
       }}
       //loop through all studentDislike objects and run the code within if it is confirmed that it will be checked for this genetic algorithm
       if(!found) {for(let i = 0; i < student.preferences.studentDislike.length; i++) {if(checkDislike[i])
-        {score = adjustScore(score, student.preferences.studentDislike[i].inputs, studentCheck.id, STUDENT_DISLIKE_BASE, false)}}}
+        {score = adjustScore(score, student.preferences.studentDislike[i].inputs, studentCheck.id, STUDENT_DISLIKE_BASE, false)}}}      
 
-      //loop through all previouslyWith objects and run the code within if it is confirmed that it will be checked for this genetic algorithm
-      if(usePastGroups) {for(let i = 0; i < student.preferences.previouslyWith.length; i++) {if(previouslyWith[i])
-        {score = adjustScore(score, student.preferences.previouslyWith[i].inputs, studentCheck.id, STUDENT_DISLIKE_BASE, true)}}}
+      //check whether the student has been in a group with the student being checked before if the usePastGroups parameter is true
+      if(usePastGroups) {score=adjustScore(score, student.preferences.previouslyWith, studentCheck.id, PREVIOUSLY_WITH_BASE, false)}
     }}
   }}
 
@@ -238,9 +245,9 @@ generation: [{g: [[Student]], s: Integer}], array containing all generation memb
 preferences: [preference] passed to score()
 returns: same format as generation, but with generation[i].s set as each member's score, and all members sorted by score in descending order, i.e. best is at generation[0]
 */
-function scoreAndSort(generation, preferences)
+function scoreAndSort(generation, preferences, usePastGroups)
 {
-  for(let i = 0; i < generation.length; i++) {generation[i] = {g: generation[i].g, s: score(generation[i].g, preferences)}}
+  for(let i = 0; i < generation.length; i++) {generation[i] = {g: generation[i].g, s: score(generation[i].g, preferences, usePastGroups)}}
   if(generation.includes(undefined)) {console.log("issues found")}
   return generation.sort((a, b) => (a.s == b.s) ? 0 : ((a.s < b.s) ? 1 : -1))
 }
