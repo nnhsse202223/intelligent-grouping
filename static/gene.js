@@ -47,12 +47,15 @@ return: [[]] of student ids
 */
 function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGroups)
 {
-  console.log("STUDENTS:")
-  console.log(students)
-  console.log("PREFERENCES:")
-  console.log(preferences)
-  console.log("USE PAST GROUPS:")
-  console.log(usePastGroups)
+  //logging
+  // console.log("STUDENTS:")
+  // console.log(students)
+  // console.log("PREFERENCES:")
+  // console.log(preferences)
+  // console.log("USE PAST GROUPS:")
+  // console.log(usePastGroups)
+
+
   //derive constants
   const HALF_SIZE = 2 * QUARTER_SIZE //half of a generation size
   const SIZE = 2 * HALF_SIZE  //a full generation size

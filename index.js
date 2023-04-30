@@ -346,8 +346,6 @@ app.post("/addGrouping", async (req, res) => {
       }
     }
 
-    console.log("\n\n\nADD USER: \n\n\n")
-    console.log(classObj.students[0].preferences.previouslyWith)
     user.save()
     res.json({status: true})
   }
@@ -355,7 +353,6 @@ app.post("/addGrouping", async (req, res) => {
 
 // edits a grouping from the database
 app.post("/editGrouping", async (req, res) => {
-  console.log("started")
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     
@@ -375,8 +372,7 @@ app.post("/editGrouping", async (req, res) => {
         classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
       }
     }
-    console.log("\n\n\nEDIT USER: \n\n\n")
-    console.log(classObj.students[0].preferences.previouslyWith)
+  
     user.save()
     res.json({status: true})
   }
@@ -456,7 +452,6 @@ app.get("/getClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     let user = await User.findOne({id: verification.user.sub}).exec()
-    //console.log("\n\nUSER:\n\n"+user)
     res.json({classes: user.classes})
   }
 })
