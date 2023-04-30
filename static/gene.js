@@ -25,7 +25,7 @@ student =
   {
     studentLike = [preference]
     studentDislike = [preference]
-    previouslyWith = [preference]
+    previouslyWith = [id]
   }
 }
 preference = 
