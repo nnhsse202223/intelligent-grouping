@@ -279,7 +279,7 @@ function showArrangeStudentsModal() {
           startLoad()
           let gNum = document.getElementById("group-num-input")
           let sNum = document.getElementById("student-num-input")
-          const groupsResult = await getRandomGroups(gNum.value ? 0 : 1, gNum.value ? +gNum.value : +sNum.value, state.info.id, Array.from(excludedStudentsListDiv.children).map(e => e.id))
+          const groupsResult = await getRandomGroups(sNum.value ? 1 : 0, gNum.value ? +gNum.value : (sNum.value ? +sNum.value : 1), state.info.id, Array.from(excludedStudentsListDiv.children).map(e => e.id))
           setGroups(groupsResult.groups)
           document.removeEventListener("input", singleInput)
           e()
@@ -348,7 +348,7 @@ function showArrangeStudentsModal() {
           let sNum = document.getElementById("student-num-input")
           const includedStudents = classes[state.info.id].obj.students.filter(student => !Array.from(excludedStudentsListDiv.children).map(e => e.id).includes(student.id))
 
-          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false, usePreviousGroups.checked)
+          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : (sNum.value ? +sNum.value : 1), sNum.value ? false : true, usePreviousGroups.checked)
           setGroups(groupsResult)
           document.removeEventListener("input", singleInput)
           e()
