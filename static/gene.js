@@ -47,13 +47,13 @@ return: [[]] of student ids
 */
 function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGroups)
 {
-  //logging
-  // console.log("STUDENTS:")
-  // console.log(students)
-  // console.log("PREFERENCES:")
-  // console.log(preferences)
-  // console.log("USE PAST GROUPS:")
-  // console.log(usePastGroups)
+  // logging
+  console.log("STUDENTS:")
+  console.log(students)
+  console.log("PREFERENCES:")
+  console.log(preferences)
+  console.log("USE PAST GROUPS:")
+  console.log(usePastGroups)
 
 
   //derive constants
@@ -103,7 +103,7 @@ function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGr
   {
     //iterate iteration number
     iteration++
-
+    console.log(iteration)
     //kill lowest half
     currentGeneration.splice(HALF_SIZE, HALF_SIZE)
 
@@ -207,7 +207,7 @@ function score(grouping, preferences, usePastGroups)
   */
   const adjustScoreNoRanking = function(current, searchList, searchValue, expBase, exp, isAdditive)
   {
-    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, exp)}}
+    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, exp);console.log("trog")}}
     return current
   }
 

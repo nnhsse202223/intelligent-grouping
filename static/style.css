@@ -777,7 +777,7 @@ h1 {
 
 .modal.tall {
   width: 350px;
-  height: 600px;
+  min-height: 600px;
 }
 
 .modal.wide {
@@ -849,7 +849,8 @@ h1 {
 }
 
 .random-options-modal > h1 {
-  margin: 0
+  margin: 0;
+  translate: -9px;
 }
 
 .random-options-modal > button {
@@ -865,7 +866,7 @@ h1 {
 #repeat-groups-check {
   transform: scale(1.5);
   cursor: pointer;
-  margin: 10px;
+  margin: 10px 0px 20px 0px;
 }
 
 .random-options-modal > .seperator {
