@@ -97,7 +97,7 @@ function createDynamicSelect(placeholder, options) {
   placeholderOption.innerText = placeholder
 
   const noPreferenceOption = document.createElement("option")
-  noPreferenceOption.value = ""
+  noPreferenceOption.value = "-1"
   noPreferenceOption.innerText = "No Preference"
 
   select.appendChild(placeholderOption)
@@ -155,7 +155,7 @@ function validateForm(data) {
     for (const preference of data.preferences) {
       for (const input of preference.inputs) {
         if (input.value == (md5(studentIdInput.value))) {
-          studentIdInput.classList.add("invalid")
+          input.classList.add("invalid")
           return {status: false, error: "Cannot pick yourself as a preference."}
         }
       }
@@ -167,8 +167,11 @@ function validateForm(data) {
       for (const input of preference.inputs) {
         for (const input2 of preference.inputs) {
           if (input.value == input2.value && input != input2) {
-            input.classList.add("invalid")
-            return {status: false, error: "Cannot select same preference twice."}
+            if(input.value != "-1") {
+              input.classList.add("invalid")
+              input2.classList.add("invalid")
+              return {status: false, error: "Cannot select same preference twice."}
+            }
           }
         }
       }
