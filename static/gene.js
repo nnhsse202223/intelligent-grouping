@@ -48,12 +48,12 @@ return: [[]] of student ids
 function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGroups)
 {
   //logging
-  // console.log("STUDENTS:")
-  // console.log(students)
-  // console.log("PREFERENCES:")
-  // console.log(preferences)
-  // console.log("USE PAST GROUPS:")
-  // console.log(usePastGroups)
+  console.log("STUDENTS:")
+  console.log(students)
+  console.log("PREFERENCES:")
+  console.log(preferences)
+  console.log("USE PAST GROUPS:")
+  console.log(usePastGroups)
 
 
   //derive constants
@@ -71,6 +71,7 @@ function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGr
   for(i = 0; i < SIZE; i++) {currentGeneration[i] = {g: randomize(students, groupSizer, amountOrSize), s: 0}}
 
   //score and sort initial population in descending order by score
+  console.log("INITIAL POPULATION:")
   currentGeneration = scoreAndSort(currentGeneration, preferences, usePastGroups)
   
   //since this is the first generation, bestGeneration and bestScore are both initially the only data point given. grab values
@@ -103,6 +104,7 @@ function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGr
   {
     //iterate iteration number
     iteration++
+    console.log("ITERATION " + iteration)
 
     //kill lowest half
     currentGeneration.splice(HALF_SIZE, HALF_SIZE)
@@ -207,12 +209,12 @@ function score(grouping, preferences, usePastGroups)
   */
   const adjustScoreNoRanking = function(current, searchList, searchValue, expBase, exp, isAdditive)
   {
-    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, exp)}}
+    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, exp); console.log("trigger")}}
     return current
   }
 
   //loop through all students in array
-  for(let group of grouping) {for(let student of group) 
+  for(let group of grouping) {for(let student of group)
   {
     //check whether a given preference is going to be checked or not for this student
     let checkLike = [] //array of length student.preferences.studentLike.length that tells the program whether to check a given studentLike preference or not based on value and position

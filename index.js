@@ -386,6 +386,7 @@ app.post("/clearPreviouslyWith", async (req, res) => {
     for(student of classObj.students) {
       student.preferences.previouslyWith = []
     }
+    console.log("cleared")
     user.save()
     res.json({status: true})
   }
@@ -452,6 +453,7 @@ app.get("/getClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     let user = await User.findOne({id: verification.user.sub}).exec()
+    console.log("updated")
     res.json({classes: user.classes})
   }
 })

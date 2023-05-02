@@ -358,18 +358,10 @@ function showArrangeStudentsModal() {
         const resetHistory = document.createElement("button")
         resetHistory.classList = "button"
         resetHistory.innerText = "Reset Partner History"
+        resetHistory.type = "button"
 
         resetHistory.addEventListener("click", async () => {
-          return fetch("/clearPreviouslyWith", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              token: auth2.currentUser.get().getAuthResponse().id_token
-            },
-            body: JSON.stringify({
-              id: state.info.id
-            })
-          })
+          await clearPreviouslyWith(state.info.id).then(async () => {updateClasses()})
         })
 
         checkContainer.appendChild(resetHistory)
@@ -398,6 +390,36 @@ function showArrangeStudentsModal() {
     modal.appendChild(optionsDiv)
   })
 }
+
+
+async function clearPreviouslyWith(id) {
+  return fetch("/clearPreviouslyWith", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: auth2.currentUser.get().getAuthResponse().id_token
+    },
+    body: JSON.stringify({
+      id: id
+    })
+  })
+}
+
+async function updateClasses() {
+  let databaseClasses = await fetch("/getClasses", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: auth2.currentUser.get().getAuthResponse().id_token
+    }}).then(response => response.json())
+
+    //loops through the classes array from the GET requst (json)
+    for(let i = 0; i < databaseClasses.classes.length; i++) {
+      //recreates the classes array from the GET request restoring the old element and new class object
+      classes[databaseClasses.classes[i].id] = {element:classes[databaseClasses.classes[i].id].element, obj:databaseClasses.classes[i]}
+    }
+}
+
 
 /*
  * @description - Adds a group to the group scatter
@@ -716,6 +738,7 @@ saveGroupBtn.addEventListener("click", async () => {
   } else if (state.mode == 6) {
     await completeGroupEdit()
   }
+  await updateClasses()
 })
 
 arrangeStudentsBtn.addEventListener("click", showArrangeStudentsModal)
