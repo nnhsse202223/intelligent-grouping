@@ -442,6 +442,11 @@ body {
   height: 250px;
 }
 
+.modal.xsmall {
+  width: 400px;
+  height: 175px;
+}
+
 .select-term-modal {
   display: flex;
   flex-direction: row;
@@ -858,6 +863,40 @@ h1 {
 
 .random-options-modal > form:valid, .random-options-modal > form:hover, .random-options-modal > form:focus {
   opacity: 1;
+}
+
+.console-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* .console-modal > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+
+.console-modal > p {
+  font-size: 1.4em;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.console-modal > input {
+  text-align: center;
+  width: 300px;
+  font-size: 1.3em;
+  border: 2px solid var(--dark);
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s all
+}
+
+.console-modal > input:focus {
+  border-color: var(--accent);
 }
 
 .student-name-container {
