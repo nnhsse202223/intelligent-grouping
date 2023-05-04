@@ -62,11 +62,8 @@ fetch(`/formData?user=${form[0]}&class=${form[1]}`).then(res => res.json()).then
     submit.addEventListener("click", async () => {
       const validateResult = validateForm(data)
       if (validateResult.status) {
-        /*
-        preferences.filter(value => value != -1)
-        */
         data.preferences.map(preference => {
-          preference.inputs = preference.inputs.filter(input => {if(input.value != "-1"){return input.value}})
+          preference.inputs = preference.inputs.map(input => input.value)
         })
         const saveResult = await saveStudentPreferences(form[0], form[1], studentIdInput.value, data.preferences)
         if (saveResult.status) {

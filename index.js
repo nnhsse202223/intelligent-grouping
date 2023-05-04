@@ -141,7 +141,10 @@ app.post("/saveStudentPreferences", async (req, res) => {
       for (const preference of req.body.preferences) {
         if (["studentLike", "studentDislike"].includes(preference.type)) {
           //explanation of next line: for each id in the preference, find the student with that id and replace it with the md5 hash of the student's id
-          preference.inputs = preference.inputs.map(id => classObj.students.find(s => id == md5(s.id)).id)
+          preference.inputs = preference.inputs.map(id => {if(id != "-1"){classObj.students.find(s => id == md5(s.id)).id}})
+        }
+        if(["topicLike", "topicDislike"].includes(preference.type)) {
+          preference.inputs = preference.inputs.map(preference.topics)
         }
         student.preferences[preference.type] = preference
       }
@@ -415,7 +418,7 @@ app.get("/getClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     let user = await User.findOne({id: verification.user.sub}).exec()
-    console.log("\n\nUSER:\n\n"+user)
+    //console.log("\n\nUSER:\n\n"+user)
     res.json({classes: user.classes})
   }
 })
