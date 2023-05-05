@@ -26,18 +26,27 @@ function rainbow(startStop) {
     }
 }
 
+let lastCommand = "/";
+
 function createConsoleModal(modal, modalExit) {
     modal.classList.add("console-modal")
-    modal.innerHTML += "<p>Enter Command:</p>"
+    let consoleText = document.createElement("p")
+    consoleText.innerHTML = "Enter a command:"
+    modal.appendChild(consoleText)
     let consoleInput = document.createElement("input")
     consoleInput.setAttribute("type", "text")
-    consoleInput.value = "/"
+    consoleInput.value = lastCommand;
     consoleInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
-            runConsoleCommand(consoleInput.value)
-            modalExit()
+            if(runConsoleCommand(consoleInput.value)) {
+                modalExit()
+            } else {
+                createError("Command not found")
+                consoleInput.classList.add("invalid")
+            }
         }
     })
+    
     modal.appendChild(consoleInput)
 }
 
@@ -55,6 +64,10 @@ function runConsoleCommand(command) {
         case "/endrainbow":
             rainbow("stop");
             break;
+        default:
+            return false;
     }
+    lastCommand = command;
+    return true;
 }
   
