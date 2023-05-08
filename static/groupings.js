@@ -714,8 +714,10 @@ createGroupBtn.addEventListener("click", () => {editGrouping()})
 saveGroupBtn.addEventListener("click", async () => {
   if (state.mode == 5) {
     await completeGroupAdd()
+    location.reload()
   } else if (state.mode == 6) {
     await completeGroupEdit()
+    location.reload()
   }
 })
 
