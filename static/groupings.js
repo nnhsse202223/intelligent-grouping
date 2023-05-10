@@ -714,9 +714,12 @@ createGroupBtn.addEventListener("click", () => {editGrouping()})
 saveGroupBtn.addEventListener("click", async () => {
   if (state.mode == 5) {
     await completeGroupAdd()
+    /*reload to update classes object. A better solution would be to update the classes object inside completeGroupAdd() 
+      similar to how we update the groupings in classes in completeGroupAdd()*/
     location.reload()
   } else if (state.mode == 6) {
     await completeGroupEdit()
+    //same as above comment but with completeGroupEdit()
     location.reload()
   }
 })
