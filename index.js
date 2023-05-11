@@ -141,10 +141,14 @@ app.post("/saveStudentPreferences", async (req, res) => {
       for (const preference of req.body.preferences) {
         if (["studentLike", "studentDislike"].includes(preference.type)) {
           //explanation of next line: for each id in the preference, find the student with that id and replace it with the md5 hash of the student's id
-          preference.inputs = preference.inputs.map(id => {if(id != "-1"){classObj.students.find(s => id == md5(s.id)).id}})
-        }
-        if(["topicLike", "topicDislike"].includes(preference.type)) {
-          preference.inputs = preference.inputs.map(preference.topics)
+          preference.inputs = preference.inputs.map((id) => {
+            if(id != "-1") {
+              return classObj.students.find(s => id == md5(s.id)).id
+            }
+            // else {
+            //   return id
+            // }
+          })
         }
         student.preferences[preference.type] = preference
       }

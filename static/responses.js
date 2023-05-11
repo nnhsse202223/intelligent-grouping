@@ -77,9 +77,14 @@ function updateStudentInformation(index) {
     list.appendChild(head)
     for(let i = 0; i < thisStudent.preferences.studentLike[0].inputs.length; i++)
     {
-      let student = findStudentById(thisStudent.preferences.studentLike[0].inputs[i])
       let info = document.createElement('li')
-      info.innerHTML = `${student.first} ${student.last}`
+      if(thisStudent.preferences.studentLike[0].inputs[i] != "-1") {
+        let student = findStudentById(thisStudent.preferences.studentLike[0].inputs[i])
+        info.innerHTML = `${student.first} ${student.last}`
+      }
+      else {
+        info.innerHTML = 'No Preference'
+      }
       list.appendChild(info) 
     }
   }
@@ -91,9 +96,14 @@ function updateStudentInformation(index) {
     list.appendChild(head)
     for(let i = 0; i < thisStudent.preferences.studentDislike[0].inputs.length; i++)
     {
-      let student = findStudentById(thisStudent.preferences.studentDislike[0].inputs[i])
       let info = document.createElement('li')
-      info.innerHTML = `${student.first} ${student.last}`
+      if(thisStudent.preferences.studentDislike[0].inputs[i] != "-1") {
+        let student = findStudentById(thisStudent.preferences.studentDislike[0].inputs[i])
+        info.innerHTML = `${student.first} ${student.last}`
+      }
+      else {
+        
+      }
       list.appendChild(info)
     }
   }
@@ -105,9 +115,14 @@ function updateStudentInformation(index) {
     list.appendChild(head)
     for(let i = 0; i < thisStudent.preferences.topicLike[0].inputs.length; i++)
     {
-      let topic = thisStudent.preferences.topicLike[0].inputs[i]
       let info = document.createElement('li')
-      info.innerHTML = topic
+      if(thisStudent.preferences.topicLike[0].inputs[i] != "-1") {
+        let topic = thisStudent.preferences.topicLike[0].inputs[i]
+        info.innerHTML = topic
+      }
+      else {
+        info.innerHTML = 'No Preference'
+      }
       list.appendChild(info)
     }
   }
@@ -119,9 +134,14 @@ function updateStudentInformation(index) {
     list.appendChild(head)
     for(let i = 0; i < thisStudent.preferences.topicDislike[0].inputs.length; i++)
     {
-      let topic = thisStudent.preferences.topicDislike[0].inputs[i]
       let info = document.createElement('li')
-      info.innerHTML = topic
+      if(thisStudent.preferences.topicDislike[0].inputs[i] != "-1") {
+        let topic = thisStudent.preferences.topicDislike[0].inputs[i]
+        info.innerHTML = topic
+      }
+      else {
+        info.innerHTML = 'No Preference'
+      }
       list.appendChild(info)
     }
   }
