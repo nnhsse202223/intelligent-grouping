@@ -4,6 +4,7 @@ let auth2
 let currentUser
 gapi.load('auth2', () => {
   auth2 = gapi.auth2.init({
+    //780971210578-bfc5navls1cnbu97ola43ve3igb3rrri.apps.googleusercontent.com for development
     client_id: '780971210578-bfc5navls1cnbu97ola43ve3igb3rrri.apps.googleusercontent.com'
   })
 
