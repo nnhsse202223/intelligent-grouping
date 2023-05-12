@@ -253,7 +253,6 @@ function showArrangeStudentsModal() {
         const or = document.createElement("h1")
         or.classList = "medium"
         or.innerText = "OR"
-        or.style.translate = "-9px"
 
         const studentNumForm = document.createElement("form")
         studentNumForm.innerHTML += "<p>Create groups of</p>"

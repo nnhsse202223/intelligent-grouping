@@ -47,12 +47,12 @@ return: [[]] of student ids
 function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGroups)
 {
   // logging
-  console.log("STUDENTS:")
-  console.log(students)
-  console.log("PREFERENCES:")
-  console.log(preferences)
-  console.log("USE PAST GROUPS:")
-  console.log(usePastGroups)
+  // console.log("STUDENTS:")
+  // console.log(students)
+  // console.log("PREFERENCES:")
+  // console.log(preferences)
+  // console.log("USE PAST GROUPS:")
+  // console.log(usePastGroups)
 
 
   //derive constants
@@ -102,7 +102,10 @@ function startGenetic(students, preferences, groupSizer, amountOrSize, usePastGr
   {
     //iterate iteration number
     iteration++
-    console.log(iteration)
+
+    //logging
+    // console.log("Iteration: " + iteration)
+
     //kill lowest half
     currentGeneration.splice(HALF_SIZE, HALF_SIZE)
 
