@@ -9,8 +9,7 @@ const MUTATION_PROBABILITY = 0.1 //the probability of any given member of a gene
 const MUTATION_PROPORTION = 0.1 //the proportion of any given mutated member of a generation to be modified
 const STUDENT_LIKE_BASE = 2 //exponential base for the increment when a student is paired with a preferred student
 const STUDENT_DISLIKE_BASE = 3 //exponential base for the decrement when a student is paired with an unpreferred student
-const PREVIOUSLY_WITH_BASE = 3 //exponential base for the decrement when a student is paired with a student they have been paired with before
-const PREVIOUSLY_WITH_EXP = 3 //exponential exponent for the decrement when a student is paired with a student they have been paired with before
+const PREVIOUSLY_WITH_PENALTY = 9 //decrement for when a student is paired with a student they have been paired with before
 //data structure:
 /*
 generation = [member]
@@ -205,9 +204,9 @@ function score(grouping, preferences, usePastGroups)
   /*
   exp: Integer exponent for the incrementation to the score
   */
-  const adjustScoreNoRanking = function(current, searchList, searchValue, expBase, exp, isAdditive)
+  const adjustScoreNoRanking = function(current, searchList, searchValue, value, isAdditive)
   {
-    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * Math.pow(expBase, exp);console.log("trog")}}
+    for(i = 0; i < searchList.length; i++) {if(searchList[i] == searchValue) {current += ((isAdditive) ? 1 : -1) * value}}
     return current
   }
 
@@ -246,7 +245,7 @@ function score(grouping, preferences, usePastGroups)
 
       //check whether the student has been in a group with the student being checked before if the usePastGroups parameter is true
       //uses adjustScoreNoRanking() because the order of the past partners does not matter as of now
-      if(usePastGroups) {score=adjustScoreNoRanking(score, student.preferences.previouslyWith, studentCheck.id, PREVIOUSLY_WITH_BASE, PREVIOUSLY_WITH_EXP, false)}
+      if(usePastGroups) {score=adjustScoreNoRanking(score, student.preferences.previouslyWith, studentCheck.id, PREVIOUSLY_WITH_PENALTY, false)}
     }}
   }}
 
