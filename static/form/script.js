@@ -63,7 +63,7 @@ fetch(`/formData?user=${form[0]}&class=${form[1]}`).then(res => res.json()).then
       const validateResult = validateForm(data)
       if (validateResult.status) {
         data.preferences.map(preference => {
-          preference.inputs = preference.inputs.map(input => input.value)
+          preference.inputs = preference.inputs.map(input => input.value).filter(value => value != -1)
         })
         const saveResult = await saveStudentPreferences(form[0], form[1], studentIdInput.value, data.preferences)
         if (saveResult.status) {
@@ -89,6 +89,8 @@ function createDynamicSelect(placeholder, options) {
   const select = document.createElement("select")
   select.required = true
   select.classList = "form-select"
+
+  options.unshift(["No Preference", -1])
 
   const placeholderOption = document.createElement("option")
   placeholderOption.disabled = true
@@ -161,7 +163,7 @@ function validateForm(data) {
     for(const preference of data.preferences) {
       for (const input of preference.inputs) {
         for (const input2 of preference.inputs) {
-          if (input.value == input2.value && input != input2) {
+          if (input.value == input2.value && input != input2 && input.value != -1) {
             input.classList.add("invalid")
             return {status: false, error: "Cannot select same preference twice."}
           }
