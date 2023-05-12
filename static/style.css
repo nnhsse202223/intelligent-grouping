@@ -777,7 +777,7 @@ h1 {
 
 .modal.tall {
   width: 350px;
-  min-height: 600px;
+  height: 600px;
 }
 
 .modal.wide {
@@ -849,30 +849,15 @@ h1 {
 }
 
 .random-options-modal > h1 {
-  margin: 0;
-  translate: -9px;
+  margin: 0
 }
 
 .random-options-modal > button {
   width: 80%;
 }
 
-.random-options-modal > form:valid:has(:checked), .random-options-modal > form:not(:has(input[type=checkbox])):valid, .random-options-modal > form:hover, .random-options-modal > form:focus {
+.random-options-modal > form:valid, .random-options-modal > form:hover, .random-options-modal > form:focus {
   opacity: 1;
-}
-
-
-
-#repeat-groups-check {
-  transform: scale(1.5);
-  cursor: pointer;
-  margin: 10px 0px 20px 0px;
-}
-
-.random-options-modal > .seperator {
-  width: 100%;
-  border: solid 2px var(--accent);
-  margin-bottom: 20px;
 }
 
 .student-name-container {

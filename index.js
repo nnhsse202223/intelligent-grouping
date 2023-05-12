@@ -41,7 +41,6 @@ const userSchema = new mongoose.Schema({
           preferences: {
             studentLike: [],
             studentDislike: [],
-            previouslyWith: [],
             topicLike: [],
             topicDislike: [],
           }
@@ -333,19 +332,7 @@ app.post("/addGrouping", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     const user = await User.findOne({id: verification.user.sub}).exec()
-    classObj = user.classes.find(c => c.id == req.body.id)
-    classObj.groupings.push(req.body.grouping)
-    
-    //updates previouslywith
-    for(group of req.body.grouping.groups) {
-      for(studentID of group.ids) {
-        // gets index of student
-        index = classObj.students.findIndex(s => s.id == studentID)
-        // adds all other students in the group to the previouslyWith array if they are not already in it                                                        //remove this to increase negative weight of repeats the more they happen\\
-        classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
-      }
-    }
-
+    user.classes.find(c => c.id == req.body.id).groupings.push(req.body.grouping)
     user.save()
     res.json({status: true})
   }
@@ -357,35 +344,11 @@ app.post("/editGrouping", async (req, res) => {
   if (verification.status) {
     
     const user = await User.findOne({id: verification.user.sub}).exec()
-    classObj = user.classes.find(c => c.id == req.body.id)
-    const groupings = classObj.groupings
+    const groupings = user.classes.find(c => c.id == req.body.id).groupings
     groupings.splice(groupings.indexOf(groupings.find(g => g.id == req.body.oldId)), 1)
     
-    classObj.groupings.push(req.body.grouping)
-
-    //updates previouslywith
-    for(group of req.body.grouping.groups) {
-      for(studentID of group.ids) {
-        // gets index of student
-        index = classObj.students.findIndex(s => s.id == studentID)
-        // adds all other students in the group to the previouslyWith array if they are not already in it
-        classObj.students[index].preferences.previouslyWith = [...classObj.students[index].preferences.previouslyWith, ...group.ids.filter(id => id != studentID).filter(id => !classObj.students[index].preferences.previouslyWith.includes(id))]
-      }
-    }
-  
-    user.save()
-    res.json({status: true})
-  }
-})
-
-app.post("/clearPreviouslyWith", async (req, res) => {
-  const verification = await verifyUser(req.header("token"))
-  if (verification.status) {
-    const user = await User.findOne({id: verification.user.sub}).exec()
-    classObj = user.classes.find(c => c.id == req.body.id)
-    for(student of classObj.students) {
-      student.preferences.previouslyWith = []
-    }
+    user.classes.find(c => c.id == req.body.id).groupings.push(req.body.grouping)
+    
     user.save()
     res.json({status: true})
   }
@@ -452,6 +415,7 @@ app.get("/getClasses", async (req, res) => {
   const verification = await verifyUser(req.header("token"))
   if (verification.status) {
     let user = await User.findOne({id: verification.user.sub}).exec()
+    console.log("\n\nUSER:\n\n"+user)
     res.json({classes: user.classes})
   }
 })
