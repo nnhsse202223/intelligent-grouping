@@ -56,7 +56,9 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Instructions for those who wish to use their newly generated preferences.
   * Follow the same steps as the steps for random grouping until you get to the "Choose an Arrangement" prompt.
   * Instead of selecting "random groupings" select "preferences" and fill out the information shown, i.e. either the amount of desired groups or the number of people in each group.
+  * If you wish to avoid repeat groupings for this next iteration (if this is not the first time groups are generated according to preferences for the current class) check the "Avoid Repeat Pairings" checkbox.
   * The groups will be automatically generated just like in random generation, after clicking "submit."
+  * Click "Save" to save the groupings and ensure that the "Avoid Repeat Pairings" works as intended for the next iteration.
 * Instructions for the group seating chart.
   * Press the sliders button on the side of a grouping in the view class screen
   * Select "Seating Chart"
@@ -197,13 +199,16 @@ sudo pm2 intelligentGrouping restart --watch
 * ./static/auth.js: Google authorization for logging in to the website
 * ./static/chart.js: Seating chart for groups
 * ./static/classes.js: Code for the classes and students
+* ./static/display.js: Code for the display mode feature  (fullscreen button in edit group section)
 * ./static/elements.js: Variables of important HTML elements for JS use
 * ./static/gene.js: Genetic algorithm for grouping
 * ./static/genetesting.js: Test methods for the genetic algorithm
 * ./static/groupings.js: Code for the grouping objects, editing groupings, and creating groupings
+* ./static/md5.js: Contains function for encryption
 * ./static/preferences.js: Used for getting and saving student preferences for genetic algorithm later
 * ./static/responses.js: All the code for the view student responses section
 * ./static/script.js: Website state system
+* ./static/sidebar.js: Code for sidebar collapsing and emerging
 * ./static/tutorial.js: JS for the tutorial page
 * ./static/ui.js: Methods to help with creating UI for the website
 	
