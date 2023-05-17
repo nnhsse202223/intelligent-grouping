@@ -110,8 +110,8 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Refer to [Trello board](https://trello.com/b/sUZqzuqE/intelligent-grouping) for remaining user stories.
 ## IMPORTANT
 ### Development Server Deployment
-* When creating branch off of main, BE SURE to change the client id on line 7 in auth.js to the client id in the development .env file.
-* When pulling a development branch to main, BE SURE to change the client id back to the orignal client id. 
+* When creating branch off of main, **BE SURE** to change the client id on line 7 in auth.js to the client id in the development .env file.
+* When pulling a development branch to main, **BE SURE** to change the client id back to the orignal client id. 
 * (It would be worth the effort to use the .env on the production and development servers to no longer need these steps.)
 ### Production Server Deployment
 1. Create a new EC2 instance used on Ubuntu.
