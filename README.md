@@ -69,7 +69,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Instructions for the fullscreen mode
   * From the view class screen, click the "Create Grouping" button
   * On the create grouping page, select the fullscreen icon
-  * Click on the X button in the top right to exit the fullscreen mode
+  * Click on the 'x' button in the top right to exit the fullscreen mode
 
 ## Exporting A CSV File From Infinite Campus
 * First open up campus tools on Infininte Campus:
