@@ -47,7 +47,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Instructions for students to fill out the forms
   * Enter your student ID into the Student ID field on the form.
   * Use the dropdown menus to rank other students and topics in the order in which you would rather not or would rather have as a part of your group.
-  * Students can select the "No Preference" option if the have no preference
+  * Students can select the "No Preference" option if they have no preference.
   * Submit the form.
 * Instructions for viewing student responses
   * On the right section of the view class screen, the view responses button can be found below the student survey information. 
