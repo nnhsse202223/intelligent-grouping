@@ -107,10 +107,12 @@ The Intelligent Grouping web application is a website designed to provide teache
 * "Topic" is an option in preferences but does not exist in the actual application yet.
 * Swapping groups on the seating chart is not functional, and the code outlined for saving the swap when it does happen is untested and likely does not work.
 ## Remaining User Stories
-* As a teacher, I want to be able to save student groups so that I can see a history of who everyone has been with and regroup based on past grouping activities arrangements so that they can interact with different members of the class
-* I want to be able to collect not only student preferences but also preferred roles within each group
-* As a teacher, I want to to be able to upload multiple file types of class rosters
-* As a teacher, I want to be able to access and use the site across multiple platforms and screen resolutions
+* Refer to [Trello board](https://trello.com/b/sUZqzuqE/intelligent-grouping) for remaining user stories.
+## IMPORTANT
+### Development Server Deployment
+* When creating branch off of main, **BE SURE** to change the client id on line 7 in auth.js to the client id in the development .env file.
+* When pulling a development branch to main, **BE SURE** to change the client id back to the orignal client id. 
+* (It would be worth the effort to use the .env on the production and development servers to no longer need these steps.)
 ### Production Server Deployment
 1. Create a new EC2 instance used on Ubuntu.
 2. Open ports for HTTP and HTTPS when walking through the EC2 wizard.
