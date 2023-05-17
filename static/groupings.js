@@ -279,7 +279,7 @@ function showArrangeStudentsModal() {
           startLoad()
           let gNum = document.getElementById("group-num-input")
           let sNum = document.getElementById("student-num-input")
-          const groupsResult = await getRandomGroups(gNum.value ? 0 : 1, gNum.value ? +gNum.value : +sNum.value, state.info.id, Array.from(excludedStudentsListDiv.children).map(e => e.id))
+          const groupsResult = await getRandomGroups(sNum.value ? 1 : 0, gNum.value ? +gNum.value : (sNum.value ? +sNum.value : 1), state.info.id, Array.from(excludedStudentsListDiv.children).map(e => e.id))
           setGroups(groupsResult.groups)
           document.removeEventListener("input", singleInput)
           e()
@@ -321,6 +321,14 @@ function showArrangeStudentsModal() {
         studentNumForm.appendChild(studentNum)
         studentNumForm.innerHTML += "<p>students</p>"
 
+        const checkContainer = document.createElement("form")
+        checkContainer.innerHTML += "<p>Avoid repeat pairings</p>"
+        const usePreviousGroups = document.createElement("input")
+        usePreviousGroups.type = "checkbox"
+        usePreviousGroups.id = "repeat-groups-check"
+        checkContainer.appendChild(usePreviousGroups)
+        
+
         const submit = document.createElement("button")
         submit.classList = "button"
         submit.innerText = "Submit"
@@ -340,16 +348,44 @@ function showArrangeStudentsModal() {
           let sNum = document.getElementById("student-num-input")
           const includedStudents = classes[state.info.id].obj.students.filter(student => !Array.from(excludedStudentsListDiv.children).map(e => e.id).includes(student.id))
 
-          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : +sNum.value, gNum.value ? true : false)
+          const groupsResult = startGenetic(includedStudents, classes[state.info.id].obj.preferences, gNum.value ? +gNum.value : (sNum.value ? +sNum.value : 1), sNum.value ? false : true, usePreviousGroups.checked)
           setGroups(groupsResult)
           document.removeEventListener("input", singleInput)
           e()
           endLoad()
         })
 
+        const resetHistory = document.createElement("button")
+        resetHistory.classList = "button"
+        resetHistory.innerText = "Reset Partner History"
+
+        resetHistory.addEventListener("click", async () => {
+          return fetch("/clearPreviouslyWith", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token: auth2.currentUser.get().getAuthResponse().id_token
+            },
+            body: JSON.stringify({
+              id: state.info.id
+            })
+          })
+        })
+
+        checkContainer.appendChild(resetHistory)
+
+        const seperator = document.createElement("hr")
+        seperator.classList = "seperator"
+
+        const seperator2 = document.createElement("hr")
+        seperator2.classList = "seperator"
+
         m.appendChild(groupNumForm)
         m.appendChild(or)
         m.appendChild(studentNumForm)
+        m.appendChild(seperator)
+        m.appendChild(checkContainer)
+        m.appendChild(seperator2)
         m.appendChild(submit)
         
         document.addEventListener("input", singleInput)
@@ -677,8 +713,13 @@ createGroupBtn.addEventListener("click", () => {editGrouping()})
 saveGroupBtn.addEventListener("click", async () => {
   if (state.mode == 5) {
     await completeGroupAdd()
+    /*reload to update classes object. A better solution would be to update the classes object inside completeGroupAdd() 
+      similar to how we update the groupings in classes in completeGroupAdd()*/
+    location.reload()
   } else if (state.mode == 6) {
     await completeGroupEdit()
+    //same as above comment but with completeGroupEdit()
+    location.reload()
   }
 })
 
