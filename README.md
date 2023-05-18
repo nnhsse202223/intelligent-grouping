@@ -47,6 +47,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Instructions for students to fill out the forms
   * Enter your student ID into the Student ID field on the form.
   * Use the dropdown menus to rank other students and topics in the order in which you would rather not or would rather have as a part of your group.
+  * Students can select the "No Preference" option if they have no preference.
   * Error messages will occur if you select yourself or duplicate preferences
   * Submit the form.
 * Instructions for viewing student responses
@@ -106,6 +107,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Genetic Algorithm is not fine-tuned yet, so it may not be perfect or accurate enough to satisfy everything, but it does at least work slightly better than randomization at this point.
 * "Topic" is an option in preferences but does not exist in the actual application yet.
 * Swapping groups on the seating chart is not functional, and the code outlined for saving the swap when it does happen is untested and likely does not work.
+* When selecting the "No Preference" option, when viewing student responses "No Preference" doesn't appear as a chosen preference (this shouldn't create any issues but needs to fixed regardlessly)
 ## Remaining User Stories
 * Refer to [Trello board](https://trello.com/b/sUZqzuqE/intelligent-grouping) for remaining user stories.
 ## IMPORTANT
