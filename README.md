@@ -48,6 +48,7 @@ The Intelligent Grouping web application is a website designed to provide teache
   * Enter your student ID into the Student ID field on the form.
   * Use the dropdown menus to rank other students and topics in the order in which you would rather not or would rather have as a part of your group.
   * Students can select the "No Preference" option if they have no preference.
+  * Error messages will occur if you select yourself or duplicate preferences
   * Submit the form.
 * Instructions for viewing student responses
   * On the right section of the view class screen, the view responses button can be found below the student survey information. 
@@ -57,7 +58,9 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Instructions for those who wish to use their newly generated preferences.
   * Follow the same steps as the steps for random grouping until you get to the "Choose an Arrangement" prompt.
   * Instead of selecting "random groupings" select "preferences" and fill out the information shown, i.e. either the amount of desired groups or the number of people in each group.
+  * If you wish to avoid repeat groupings for this next iteration (if this is not the first time groups are generated according to preferences for the current class) check the "Avoid Repeat Pairings" checkbox.
   * The groups will be automatically generated just like in random generation, after clicking "submit."
+  * Click "Save" to save the groupings and ensure that the "Avoid Repeat Pairings" works as intended for the next iteration.
 * Instructions for the group seating chart.
   * Press the sliders button on the side of a grouping in the view class screen
   * Select "Seating Chart"
@@ -67,6 +70,7 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Instructions for the fullscreen mode
   * From the view class screen, click the "Create Grouping" button
   * On the create grouping page, select the fullscreen icon
+  * Click on the 'x' button in the top right to exit the fullscreen mode
 
 ## Exporting A CSV File From Infinite Campus
 * First open up campus tools on Infininte Campus:
@@ -105,10 +109,12 @@ The Intelligent Grouping web application is a website designed to provide teache
 * Swapping groups on the seating chart is not functional, and the code outlined for saving the swap when it does happen is untested and likely does not work.
 * When selecting the "No Preference" option, when viewing student responses "No Preference" doesn't appear as a chosen preference (this shouldn't create any issues but needs to fixed regardlessly)
 ## Remaining User Stories
-* As a teacher, I want to be able to save student groups so that I can see a history of who everyone has been with and regroup based on past grouping activities arrangements so that they can interact with different members of the class
-* I want to be able to collect not only student preferences but also preferred roles within each group
-* As a teacher, I want to to be able to upload multiple file types of class rosters
-* As a teacher, I want to be able to access and use the site across multiple platforms and screen resolutions
+* Refer to [Trello board](https://trello.com/b/sUZqzuqE/intelligent-grouping) for remaining user stories.
+## IMPORTANT
+### Development Server Deployment
+* When creating branch off of main, **BE SURE** to change the client id on line 7 in auth.js to the client id in the development .env file.
+* When pulling a development branch to main, **BE SURE** to change the client id back to the orignal client id. 
+* (It would be worth the effort to use the .env on the production and development servers to no longer need these steps.)
 ### Production Server Deployment
 1. Create a new EC2 instance used on Ubuntu.
 2. Open ports for HTTP and HTTPS when walking through the EC2 wizard.
@@ -199,13 +205,16 @@ sudo pm2 intelligentGrouping restart --watch
 * ./static/auth.js: Google authorization for logging in to the website
 * ./static/chart.js: Seating chart for groups
 * ./static/classes.js: Code for the classes and students
+* ./static/display.js: Code for the display mode feature  (fullscreen button in edit group section)
 * ./static/elements.js: Variables of important HTML elements for JS use
 * ./static/gene.js: Genetic algorithm for grouping
 * ./static/genetesting.js: Test methods for the genetic algorithm
 * ./static/groupings.js: Code for the grouping objects, editing groupings, and creating groupings
+* ./static/md5.js: Contains function for encryption
 * ./static/preferences.js: Used for getting and saving student preferences for genetic algorithm later
 * ./static/responses.js: All the code for the view student responses section
 * ./static/script.js: Website state system
+* ./static/sidebar.js: Code for sidebar collapsing and emerging
 * ./static/tutorial.js: JS for the tutorial page
 * ./static/ui.js: Methods to help with creating UI for the website
 	
