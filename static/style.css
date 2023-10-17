@@ -1295,7 +1295,7 @@ h1 {
 }
 
 .accordion-item.active .answer{
-  max-height: 40rem;
+  max-height: 100rem;
 }
 
 .accordion-item .fa-angle-right{
